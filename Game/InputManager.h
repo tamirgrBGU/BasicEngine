@@ -17,7 +17,7 @@
 	void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	{
 		Game *scn = (Game*)glfwGetWindowUserPointer(window);
-		scn->ShapeTransformation(scn->zCameraTranslate,(float)yoffset);
+		scn->MyTranslate(glm::vec3(0,0,1),0);
 		
 	}
 	
@@ -57,7 +57,6 @@
 		}
 	}
 	
-
 	void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 	{
 		Game *scn = (Game*)glfwGetWindowUserPointer(window);
@@ -82,10 +81,10 @@
 		
 	}
 
-	void init(Display &display)
+	void Init(Display &display)
 	{
-		display.addKeyCallBack(key_callback);
-		display.addMouseCallBacks(mouse_callback,scroll_callback,cursor_position_callback);
-		display.addResizeCallBack(window_size_callback);
+		display.AddKeyCallBack(key_callback);
+		display.AddMouseCallBacks(mouse_callback,scroll_callback,cursor_position_callback);
+		display.AddResizeCallBack(window_size_callback);
 
 	}

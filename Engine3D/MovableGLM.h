@@ -8,7 +8,7 @@ public:
 	glm::mat4 MakeTrans(glm::mat4 &prevTransformations) const;
 	glm::mat4 MakeTrans() const;
 	void MyTranslate(glm::vec3 delta, int mode);
-	void MyRotate(float angle, glm::vec3 vec, int mode);
+	void MyRotate(float angle, glm::vec3 &vec, int mode);
 	void MyScale(glm::vec3 scale);
 	void ZeroTrans();
 private:

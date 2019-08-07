@@ -30,36 +30,36 @@ Display::Display(int width, int height, const std::string& title)
 
 }
 
-void Display::addKeyCallBack(void(*keyCallback)(GLFWwindow *,int,int,int,int))
+void Display::AddKeyCallBack(void(*keyCallback)(GLFWwindow *,int,int,int,int))
 {
 	glfwSetKeyCallback(m_window,(void(*)(GLFWwindow *,int,int,int,int))keyCallback);//{
 
 }
 
-void Display::addMouseCallBacks(void (* mousebuttonfun)(GLFWwindow*,int,int,int),void (* scrollfun)(GLFWwindow*,double,double),void (* cursorposfun)(GLFWwindow*,double,double))
+void Display::AddMouseCallBacks(void (* mousebuttonfun)(GLFWwindow*,int,int,int),void (* scrollfun)(GLFWwindow*,double,double),void (* cursorposfun)(GLFWwindow*,double,double))
 {
 	glfwSetMouseButtonCallback(m_window,mousebuttonfun);
 	glfwSetScrollCallback(m_window, scrollfun);
 	glfwSetCursorPosCallback(m_window , cursorposfun);
 }
 
-void Display::addResizeCallBack(void (*windowsizefun)(GLFWwindow*,int,int))
+void Display::AddResizeCallBack(void (*windowsizefun)(GLFWwindow*,int,int))
 {
 	glfwSetWindowSizeCallback(m_window,windowsizefun);
 }
 
-void Display::setScene(void *userPointer)
+void Display::SetScene(void *userPointer)
 {
 	
 	glfwSetWindowUserPointer(m_window,userPointer);
 }
 
-void* Display::getScene()
+void* Display::GetScene()
 {
 	return glfwGetWindowUserPointer(m_window);
 }
 
-bool Display::closeWindow()
+bool Display::CloseWindow()
 {
 	return glfwWindowShouldClose(m_window) !=0;
 }

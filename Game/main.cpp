@@ -15,21 +15,18 @@
 	
 	Display display(DISPLAY_WIDTH, DISPLAY_HEIGHT, "OpenGL");
 	
-	init(display);
+	Init(display);
 	
 	scn->Init();
 
 	scn->AddShader("../res/shaders/pickingShader");	
 	scn->AddShader("../res/shaders/basicShader");
-	//scn->AddShader("../res/shaders/basicShader2D");
-
+	
 	scn->AddTexture("../res/textures/box0.bmp",false);
-	//scn->AddTexture("../res/textures/plane.png",true);
 
+	display.SetScene(scn);
 
-	display.setScene(scn);
-
-	while(!display.closeWindow())
+	while(!display.CloseWindow())
 	{
 		scn->Draw(1,0,BACK,true,false);
 		scn->Motion();

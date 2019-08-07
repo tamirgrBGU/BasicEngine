@@ -161,190 +161,32 @@
 	void Scene::ShapeTransformation(int type,float amt)
 	{
 		//vec3 newAxis;
-		//if(glm::abs(amt)>1e-5)
-		//{
-		//	switch (type)
-		//	{
-		//	case xLocalTranslate:
-		//		if(pickedShape ==-1)
-		//			myTranslate(vec3(amt,0,0),1);
-		//		else
-		//		{
-		//			int i = pickedShape;
-		//			for (; chainParents[i] > -1; i = chainParents[i]);
-		//			shapes[i]->myTranslate(vec3(amt,0,0),1);
-		//		}
-		//		break;
-		//	case yLocalTranslate:
-		//		if(pickedShape ==-1)
-		//			myTranslate(vec3(0,amt,0),1);
-		//		else
-		//			{
-		//				int i = pickedShape;
-		//				for (; chainParents[i] > -1; i = chainParents[i]);
-		//				shapes[i]->myTranslate(vec3(0,amt,0),1);
-		//			}
-		//		break;
-		//	case zLocalTranslate:
-		//		if(pickedShape ==-1)
-		//			myTranslate(vec3(0,0,amt),1);
-		//		else
-		//		{
-		//			int i = pickedShape;
-		//			for (; chainParents[i] > -1; i = chainParents[i]);
-		//			shapes[i]->myTranslate(vec3(0,0,amt),1);
-		//		}
-		//		break;
-		//	case xGlobalTranslate:
-		//		if(pickedShape ==-1)
-		//			myTranslate(vec3(amt/5.0,0,0),0);
-		//		else
-		//		{
-		//			int i = pickedShape;
-		//			for (; chainParents[i] > -1; i = chainParents[i]);
-		//			shapes[i]->myTranslate(vec3(amt,0,0),0);
-		//		}
-		//		break;
-		//	case yGlobalTranslate:
-		//		if(pickedShape ==-1)
-		//			myTranslate(vec3(0,amt/5.0,0),0);
-		//		else
-		//		{
-		//			int i = pickedShape;
-		//			for (; chainParents[i] > -1; i = chainParents[i]);
-		//			shapes[i]->myTranslate(vec3(0,amt,0),0);
-		//		}
-		//		break;
-		//	case zGlobalTranslate:
-		//		if(pickedShape ==-1)
-		//			myTranslate(vec3(0,0,amt/5.0),0);
-		//						else
-		//		{
-		//			int i = pickedShape;
-		//			for (; chainParents[i] > -1; i = chainParents[i]);
-		//			shapes[i]->myTranslate(vec3(0,0,amt),0);
-		//		}
-		//		break;
-		//	case xLocalRotate:
-		//		if(pickedShape ==-1)
-		//			myRotate(amt,vec3(1,0,0),xAxis1);
-		//		else
-		//			shapes[pickedShape]->myRotate(amt,vec3(1,0,0),xAxis1);
-		//		break;
-		//	case yLocalRotate:
-		//		if(pickedShape ==-1)
-		//			myRotate(amt,vec3(0,1,0),-1);
-		//		else
-		//			shapes[pickedShape]->myRotate(amt,vec3(0,1,0),-1);
-		//		break;
-		//	case zLocalRotate:
-		//		if(pickedShape ==-1)
-		//			myRotate(amt,vec3(0,0,1),zAxis1);
-		//		else
-
-		//			shapes[pickedShape]->myRotate(amt,vec3(0,0,1),zAxis1);
-		//	break;
-		//	case xGlobalRotate:
-		//		if(pickedShape ==-1)
-		//			globalSystemRot(amt,vec3(1,0,0),xAxis1);
-		//		else
-		//		{
-		//			
-		//			if(direction == -1 && pickedShape+2<shapes.size())
-		//			{
-		//				OpositeDirectionRot(glm::vec3(1,0,0),amt);
-		//			}
-		//			else
-		//				shapes[pickedShape]->globalSystemRot(amt,vec3(1,0,0),xAxis1);
-		//		}
-		//		break;
-		//	case yGlobalRotate:
-		//		if(pickedShape ==-1)
-		//			globalSystemRot(amt,vec3(0,1,0),-1);
-		//		else
-		//		{
-		//			shapes[pickedShape]->globalSystemRot(amt,vec3(0,1,0),-1);
-		//			if(direction == -1)
-		//			{
-		//				OpositeDirectionRot(glm::vec3(0,1,0),amt);
-		//			}
-		//			else
-		//				shapes[pickedShape]->globalSystemRot(amt,vec3(1,0,0),xAxis1);
-		//		}
-		//		break;
-		//	case zGlobalRotate:
-		//		if(pickedShape ==-1)
-		//			globalSystemRot(amt,vec3(0,0,1),zAxis12);
-		//		else
-		//		{
-		//			
-		//			
-		//			if(direction == -1 && pickedShape+2<shapes.size())
-		//			{
-		//				OpositeDirectionRot(glm::vec3(0,0,1),amt);
-		//			}
-		//			else
-		//				shapes[pickedShape]->globalSystemRot(amt,vec3(0,0,1),zAxis12);
-		//		}
-		//	break;
-		//	case xScale:
-		//		if(pickedShape ==-1)
-		//			myScale(vec3(amt,1,1));
-		//		else
-		//			shapes[pickedShape]->myScale(vec3(amt,1,1));
-		//	break;
-		//	case yScale:
-		//		if(pickedShape ==-1)
-		//			myScale(vec3(1,amt,1));
-		//		else
-		//			shapes[pickedShape]->myScale(vec3(1,amt,1));
-		//	break;
-		//	case zScale:
-		//		if(pickedShape ==-1)
-		//			myScale(vec3(1,1,amt));
-		//		else
-		//			shapes[pickedShape]->myScale(vec3(1,1,amt));
-		//	break;
-		//	case xCameraTranslate: //camera plane translate
-		//		if(pickedShape == -1)
-		//			myTranslate(vec3(amt/5.0,0,0),0);
-		//		else
-		//		{
-		//			//newAxis = findAxis(vec3(1,0,0));					
-		//				int i = pickedShape;
-		//			for (; chainParents[i] > 0; i = chainParents[i]);
-		//		
-		//			shapes[i]->translateInSystem(*this,vec3(amt,0,0),0,false);
-		//		}
-		//		break;
-		//	case yCameraTranslate:
-		//		if(pickedShape ==-1)
-		//			myTranslate(vec3(0,amt/5.0,0),0);
-		//		else
-		//			{
-		//				//newAxis = findAxis(vec3(0,1,0));
-		//					int i = pickedShape;
-		//				for (; chainParents[i] > 0; i = chainParents[i]);
-		//				
-		//				shapes[i]->translateInSystem(*this,vec3(0,amt,0),0,false);
-		//			}
-		//	break;
-		//	case zCameraTranslate:
-		//		if(pickedShape ==-1)
-		//			myTranslate(vec3(0,0,amt/5.0),0);
-		//		else
-		//			{
-		//			//	newAxis = findAxis(vec3(0,0,1));
-		//					int i = pickedShape;
-		//				for (; chainParents[i] > 0; i = chainParents[i]);
-		//	
-		//				shapes[i]->translateInSystem(*this,vec3(0,0,amt),0,false);
-		//			}
-		//	break;
-		//	default:
-		//		break;
-		//	}
-		//}
+		if(glm::abs(amt)>1e-5)
+		{
+			switch (type)
+			{
+			case xTranslate:
+				shapes[pickedShape]->MyTranslate(glm::vec3(amt,0,0),0);
+			break;
+			case yTranslate:
+				shapes[pickedShape]->MyTranslate(glm::vec3(0,amt,0),0);
+			break;
+			case zTranslate:
+				shapes[pickedShape]->MyTranslate(glm::vec3(0,0,amt),0);
+			break;
+			case xRotate:
+				shapes[pickedShape]->MyRotate(amt,glm::vec3(1,0,0),0);
+			break;
+			case yRotate:
+				shapes[pickedShape]->MyRotate(amt,glm::vec3(0,1,0),0);
+			break;
+			case zRotate:
+				shapes[pickedShape]->MyRotate(amt,glm::vec3(0,0,1),0);
+			break;
+			default:
+				break;
+			}
+		}
 
 	}
 
@@ -359,45 +201,25 @@
 	float Scene::Picking(int x,int y)
 	{
 		
-		Draw(0,0,BACK,true,false); 
 		
-		GLint viewport[4];  
-		unsigned char data[4];
-		glGetIntegerv(GL_VIEWPORT, viewport); //reading viewport parameters
-		glReadPixels(x,viewport[3] - y,1,1, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glReadPixels(x,viewport[3] - y,1,1,GL_DEPTH_COMPONENT,GL_FLOAT,&depth);
-		std::cout<<"depth "<<depth<<std::endl;
-		int pickedID = data[0] + data[1]*256 + data[2]*256*256 - 1;
-		if(data[0] == 0 && data[1] == 0 && data[2] == 0)
-		{
-			pickedShape = -1;
-			//std::cout<<"not picked"<<std::endl;
-		}
-		else
-		{
-			pickedShape = pickedID;
-			std::cout<<"picked "<<pickedID<<std::endl;
-			xold = x;
-			yold = y;
-		}
-		return depth;
+		return 0;
 	}
 	//return coordinates in global system for a tip of arm position is local system 
 	void Scene::MouseProccessing(int button)
 	{
-		if(pickedShape == -1 || shapes[pickedShape]->Is2D())
+		if(pickedShape == -1)
 		{
 			if(button == 1 )
 			{				
 
-				ShapeTransformation(xCameraTranslate,-(float)xrel);
-				ShapeTransformation(yCameraTranslate,(float)yrel);
+				MyTranslate(glm::vec3(-xrel/10.0f,0,0),0);
+				MyTranslate(glm::vec3(0,yrel/10.0f,0),0);
 				WhenTranslate();
 			}
 			else
 			{
-				ShapeTransformation(zGlobalRotate,(float)xrel*.5f);
-				ShapeTransformation(xGlobalRotate,(float)yrel*.5f);
+				MyRotate(xrel/2.0f,glm::vec3(1,0,0),0);
+				MyRotate(yrel/2.0f,glm::vec3(0,0,1),0);
 				WhenRotate();
 			}
 		}

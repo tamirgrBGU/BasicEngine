@@ -21,8 +21,7 @@ class Scene : public MovableGLM
 
 public:
 	enum axis{xAxis,yAxis,zAxis};
-	enum transformations{xLocalTranslate,yLocalTranslate,zLocalTranslate,xGlobalTranslate,yGlobalTranslate,zGlobalTranslate,
-		xLocalRotate,yLocalRotate,zLocalRotate,xGlobalRotate,yGlobalRotate,zGlobalRotate,xScale,yScale,zScale,xCameraTranslate,yCameraTranslate,zCameraTranslate};
+	enum transformations{xTranslate,yTranslate,zTranslate,xRotate,yRotate,zRotate,xScale,yScale,zScale,xCameraTranslate,yCameraTranslate,zCameraTranslate};
 	enum modes{POINTS,LINES,LINE_LOOP,LINE_STRIP,TRIANGLES,TRIANGLE_STRIP,TRIANGLE_FAN,QUADS};
 	enum cameraMotion{FORWARD,RIGHT,UP,ROTLEFT,ROTUP};
 	enum shapes

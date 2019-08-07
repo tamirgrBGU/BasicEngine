@@ -27,22 +27,22 @@ glm::mat4 MovableGLM::MakeTrans(glm::mat4 &prevTransformations) const
 
 glm::mat4 MovableGLM::MakeTrans() const
 {
-	return   rot * trans ;
+	return   trans * rot  ;
 }
 
 void MovableGLM::MyTranslate(glm::vec3 delta,int mode)
 {
-	glm::translate(trans,delta);
+	trans = glm::translate(trans,delta);
 }
 
-void  MovableGLM::MyRotate(float angle,glm::vec3 vec,int mode)
+void  MovableGLM::MyRotate(float angle,glm::vec3 &vec,int mode)
 {
-	glm::rotate(rot,angle,vec);
+	rot = glm::rotate(rot,angle,vec);
 }
 	
 void  MovableGLM::MyScale(glm::vec3 scale)
 {
-	glm::scale(scl,scale);
+	scl = glm::scale(scl,scale);
 }
 
 void MovableGLM::ZeroTrans()
