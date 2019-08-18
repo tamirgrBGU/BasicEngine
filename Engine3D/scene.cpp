@@ -21,7 +21,8 @@
 		//verticesSize = sizeof(vertices)/sizeof(vertices[0]);
 		//
 		//indicesSize = sizeof(indices)/sizeof(indices[0]) ; 
-		glLineWidth(3);
+		glLineWidth(5);
+	
 		cameras.push_back(new Camera(glm::vec3(0,0,1.0f),glm::vec3(0,0,-1.0f),60.0f,0.1f,100.0f));		
 		pickedShape = -1;
 		depth = 0;
@@ -36,7 +37,7 @@
 		//verticesSize = sizeof(vertices)/sizeof(vertices[0]);
 		//
 		//indicesSize = sizeof(indices)/sizeof(indices[0]) ; 
-		glLineWidth(6);
+		glLineWidth(5);
 		cameras.push_back(new Camera(position,-position,angle,near,far));
 		pickedShape = -1;
 		depth = 0;
@@ -86,8 +87,7 @@
 
 	void Scene::Draw(int shaderIndx,int cameraIndx,int buffer,bool toClear,bool debugMode)
 	{
-		//glEnable(GL_CULL_FACE);
-		
+		glEnable(GL_DEPTH_TEST);
 		glm::mat4 Normal = MakeTrans();
 	
 		glm::mat4 MVP = cameras[cameraIndx]->GetViewProjection()*glm::inverse(cameras[cameraIndx]->MakeTrans());
@@ -104,35 +104,22 @@
 		{
 			if(shapes[i]->Is2Render())
 			{
-				glm::mat4 Normal1 = glm::mat4(1);
-				pickedShape = i;
-				for (int j = i; chainParents[j] > -1; j = chainParents[j])
-				{
-					Normal1 =  shapes[chainParents[j]]->MakeTrans() * Normal1;
-				}
-			
-				//mat4 MVP1 = MVP * Normal1; 
-				Normal1 = Normal * Normal1;
-
-				//MVP1 = MVP1 * shapes[i]->MakeTransScale(mat4(1));
-				Normal1 = Normal1 * shapes[i]->MakeTrans();
+				glm::mat4 Model = Normal * shapes[i]->MakeTrans();
 				
 				if(shaderIndx > 0)
 				{
-					Update(MVP,Normal1,shapes[i]->GetShader());
-					shapes[i]->Draw(shaders,textures,false);
-					
+					Update(MVP,Model,shapes[i]->GetShader());
+					shapes[i]->Draw(shaders,textures,false);	
 				}
 				else 
 				{ //picking
-					Update(MVP,Normal1,0);
+					Update(MVP,Model,0);
 					shapes[i]->Draw(shaders,textures,true);
 				}
 			}
 		}
 		pickedShape = p;
 	}
-
 
 	void Scene::MoveCamera(int cameraIndx,int type,float amt)
 	{
@@ -212,7 +199,7 @@
 			if(button == 1 )
 			{				
 
-				MyTranslate(glm::vec3(-xrel/10.0f,0,0),0);
+				MyTranslate(glm::vec3(0,0,-xrel/10.0f),0);
 				MyTranslate(glm::vec3(0,yrel/10.0f,0),0);
 				WhenTranslate();
 			}
@@ -257,7 +244,13 @@
 			shapes[shpIndx]->Unhide();
 	}
 
-Scene::~Scene(void)
+	void Scene::Clear(float r, float g, float b, float a)
+	{
+		glClearColor(r, g, b, a);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
+
+	Scene::~Scene(void)
 {
 	for (Shape* shp : shapes)
 		{
@@ -278,10 +271,6 @@ Scene::~Scene(void)
 
 }
 
-void Scene::Clear(float r, float g, float b, float a)
-{
-	glClearColor(r, g, b, a);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
+
 	 
 	

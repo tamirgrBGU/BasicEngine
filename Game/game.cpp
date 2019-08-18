@@ -27,29 +27,18 @@ void Game::addShape(int type,int parent,unsigned int mode)
 
 void Game::Init()
 {		
-	AddShape(Cube,-1,TRIANGLES);
-	//AddShapeCopy(0,-1,TRIANGLES);
-	//AddShapeCopy(0,-1,TRIANGLES);
-	//AddShapeCopy(0,-1,TRIANGLES);
-	//AddShapeCopy(0,-1,TRIANGLES);
-	//AddShapeCopy(0,-1,TRIANGLES);
 
-	//for (int i = 0; i < shapes.size(); i++)
-	//{
-	//	pickedShape++;
-	//	ShapeTransformation(i%3,10.0f*(i%2-0.5f));
-	//	SetShapeTex(i,0);
-	//}
+	AddShape(Octahedron,-1,TRIANGLES);
 	
 	pickedShape = 0;
-	//ShapeTransformation(zTranslate,-10);
+	
 	SetShapeTex(0,0);
-	MoveCamera(0,FORWARD,-10);
+	MoveCamera(0,RIGHT,10);
 	pickedShape = -1;
-	ReadPixel();
+	//ReadPixel();
 }
 
-	void Game::Update(const glm::mat4 &MVP,const glm::mat4 &Normal,const int  shaderIndx)
+	void Game::Update(const glm::mat4 &MVP,const glm::mat4 &Model,const int  shaderIndx)
 {
 	Shader *s = shaders[shaderIndx];
 	int r = ((pickedShape+1) & 0x000000FF) >>  0;
@@ -57,7 +46,7 @@ void Game::Init()
 	int b = ((pickedShape+1) & 0x00FF0000) >> 16;
 	s->Bind();
 	s->SetUniformMat4f("MVP", MVP);
-	s->SetUniformMat4f("Normal", Normal);
+	s->SetUniformMat4f("Normal",Model);
 	s->SetUniform4f("lightDirection", 0.0f , 0.0f, -1.0f, 0.0f);
 	if(shaderIndx == 0)
 		s->SetUniform4f("lightColor",r/255.0f, g/255.0f, b/255.0f,1.0f);
