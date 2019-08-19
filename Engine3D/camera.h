@@ -11,14 +11,6 @@ public:
 	inline glm::mat4 GetViewProjection() const	{
 		return projection;}	
 
-	void MoveForward(float amt);
-	void MoveRight(float amt);
-	void MoveUp(float amt);
-
-	void Pitch(float angle);
-
-	void RotateY(float angle);
-
 	inline float GetAngle(){
 		return fov;}
 

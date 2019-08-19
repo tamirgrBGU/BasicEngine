@@ -33,7 +33,7 @@ void Game::Init()
 	pickedShape = 0;
 	
 	SetShapeTex(0,0);
-	MoveCamera(0,RIGHT,10);
+	MoveCamera(0,zTranslate,10);
 	pickedShape = -1;
 	//ReadPixel();
 }

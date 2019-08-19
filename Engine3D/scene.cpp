@@ -125,23 +125,26 @@
 	{
 		switch (type)
 		{
-		case FORWARD:
-			cameras[cameraIndx]->MoveForward(amt);
+			case xTranslate:
+				cameras[cameraIndx]->MyTranslate(glm::vec3(amt,0,0),0);
 			break;
-		case UP:
-			cameras[cameraIndx]->MoveUp(amt);
+			case yTranslate:
+				cameras[cameraIndx]->MyTranslate(glm::vec3(0,amt,0),0);
 			break;
-		case RIGHT:
-			cameras[cameraIndx]->MoveRight(amt);
+			case zTranslate:
+				cameras[cameraIndx]->MyTranslate(glm::vec3(0,0,amt),0);
 			break;
-		case ROTLEFT:
-			cameras[cameraIndx]->RotateY(amt);
+			case xRotate:
+				cameras[cameraIndx]->MyRotate(amt,glm::vec3(1,0,0),0);
 			break;
-		case ROTUP:
-			cameras[cameraIndx]->Pitch(amt);
-		break;
-		default:
+			case yRotate:
+				cameras[cameraIndx]->MyRotate(amt,glm::vec3(0,1,0),0);
 			break;
+			case zRotate:
+				cameras[cameraIndx]->MyRotate(amt,glm::vec3(0,0,1),0);
+			break;
+			default:
+				break;
 		}
 	}
 
@@ -199,8 +202,8 @@
 			if(button == 1 )
 			{				
 
-				MyTranslate(glm::vec3(0,0,-xrel/10.0f),0);
-				MyTranslate(glm::vec3(0,yrel/10.0f,0),0);
+				MyTranslate(glm::vec3(-xrel/20.0f,0,0),0);
+				MyTranslate(glm::vec3(0,yrel/20.0f,0),0);
 				WhenTranslate();
 			}
 			else
