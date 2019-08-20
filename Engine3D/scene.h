@@ -5,24 +5,16 @@
 #include "VertexArray.hpp"
 #include <vector>
 
-enum buffers
-	{
-		COLOR,
-		DEPTH,
-		STENCIL,
-		BACK,
-		FRONT,
-		ACCUM,
-		NONE,
-	};
 
 class Scene : public MovableGLM
 {
 
 public:
 	enum axis{xAxis,yAxis,zAxis};
-	enum transformations{xTranslate,yTranslate,zTranslate,xRotate,yRotate,zRotate,xScale,yScale,zScale,xCameraTranslate,yCameraTranslate,zCameraTranslate};
-	enum modes{POINTS,LINES,LINE_LOOP,LINE_STRIP,TRIANGLES,TRIANGLE_STRIP,TRIANGLE_FAN,QUADS};
+	enum transformations{xTranslate, yTranslate, zTranslate, xRotate, yRotate, zRotate, xScale, yScale, zScale, xCameraTranslate, yCameraTranslate, zCameraTranslate};
+	enum modes{POINTS, LINES, LINE_LOOP, LINE_STRIP, TRIANGLES, TRIANGLE_STRIP, TRIANGLE_FAN, QUADS};
+	enum buffers{COLOR, DEPTH, STENCIL, BACK, FRONT, ACCUM, NONE };
+
 	enum shapes
 	{
 		Axis,
@@ -36,7 +28,7 @@ public:
 	
 	
 	Scene();
-	Scene(glm::vec3 position,float angle,float near, float far);
+	Scene(float angle,float near, float far);
 	
 	void AddShapeFromFile(const std::string& fileName,int parent,unsigned int mode);
 	virtual void AddShape(int type,int parent,unsigned int mode);

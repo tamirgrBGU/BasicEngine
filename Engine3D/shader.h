@@ -30,9 +30,7 @@ private:
 		POSITION_VB,
 		COLOR_VB,
 		NORMAL_VB,
-		WEIGHT_VB,
 		TEXCOORD_VB,
-		INDEX_VB,	
 		JOINT_INDEX_VB
 	};
 	static const unsigned int NUM_SHADERS = 2;
@@ -46,7 +44,8 @@ private:
 	unsigned int m_program;
 	unsigned int m_shaders[NUM_SHADERS];
 	std::unordered_map<std::string, int> m_UniformLocationCache;
-		int GetUniformLocation (const std::string& name);
+	int GetUniformLocation (const std::string& name);
+	void CheckShaderError(unsigned int shader, unsigned int flag, bool isProgram, const std::string& errorMessage);
 };
 
 #endif

@@ -13,32 +13,40 @@ static void printMat(const glm::mat4 mat)
 	}
 }
 
-Game::Game(glm::vec3 position,float angle,float near, float far) : Scene(position,angle,near,far)
-{ 
-	count =0;
+Game::Game() : Scene()
+{
+}
+
+Game::Game(float angle,float near, float far) : Scene(angle,near,far)
+{ 	
 }
 
 void Game::addShape(int type,int parent,unsigned int mode)
 {
-		chainParents.push_back(parent);
-		
+		chainParents.push_back(parent);		
 		shapes.push_back(new Shape(type,mode));	
 }
 
 void Game::Init()
 {		
 
-	AddShape(Octahedron,-1,TRIANGLES);
+	AddShader("../res/shaders/pickingShader");	
+	AddShader("../res/shaders/basicShader");
+	
+	AddTexture("../res/textures/box0.bmp",false);
+
+	AddShape(Plane,-1,TRIANGLES);
 	
 	pickedShape = 0;
 	
 	SetShapeTex(0,0);
 	MoveCamera(0,zTranslate,10);
 	pickedShape = -1;
-	//ReadPixel();
+	
+	//ReadPixel(); //uncomment when you are reading from the z-buffer
 }
 
-	void Game::Update(const glm::mat4 &MVP,const glm::mat4 &Model,const int  shaderIndx)
+void Game::Update(const glm::mat4 &MVP,const glm::mat4 &Model,const int  shaderIndx)
 {
 	Shader *s = shaders[shaderIndx];
 	int r = ((pickedShape+1) & 0x000000FF) >>  0;
@@ -57,17 +65,10 @@ void Game::Init()
 
 void Game::WhenRotate()
 {
-	//if(pickedShape>=0)
-	//	printMat(GetShapeTransformation());
 }
 
 void Game::WhenTranslate()
 {
-	if(pickedShape>=0)
-	{
-	
-
-	}
 }
 
 void Game::Motion()
@@ -79,5 +80,4 @@ void Game::Motion()
 
 Game::~Game(void)
 {
-	
 }

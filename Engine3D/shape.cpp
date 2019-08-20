@@ -1,7 +1,6 @@
 #define GLEW_STATIC
 #include <GL\glew.h>
 #include "shape.h"
-#include "Log.hpp"
 
 
 Shape::Shape(const Shape& shape,unsigned int mode)
@@ -52,7 +51,7 @@ void Shape::Draw( const std::vector<Shader*> shaders, const std::vector<Texture*
 	/*if(isCopy)
 		glDrawArrays(GL_TRIANGLES, 0, indicesNum);
 	else*/
-	GLCall(glDrawElements(mode,mesh->GetIndicesNum(), GL_UNSIGNED_INT, 0));
+	glDrawElements(mode,mesh->GetIndicesNum(), GL_UNSIGNED_INT, 0);
 	mesh->Unbind();
 }
 

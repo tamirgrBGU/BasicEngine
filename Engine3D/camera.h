@@ -6,7 +6,7 @@
 class Camera : public MovableGLM
 {
 public:
-	Camera(glm::vec3& pos,const glm::vec3& forward, float fov, float zNear, float zFar);
+	Camera( float fov, float zNear, float zFar);
 
 	inline glm::mat4 GetViewProjection() const	{
 		return projection;}	

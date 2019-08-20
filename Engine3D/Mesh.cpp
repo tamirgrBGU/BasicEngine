@@ -29,10 +29,10 @@ IndexedModel PlaneTriangles()
 {
 	Vertex vertices[] =
 	{
-		Vertex(glm::vec3(-1, -1, -1), glm::vec2(0, 0), glm::vec3(0, 0, 1),glm::vec3(0, 0, 1)),
-		Vertex(glm::vec3(-1, 1, -1), glm::vec2(0, 1), glm::vec3(0, 0, 1),glm::vec3(0, 0, 1)),
-		Vertex(glm::vec3(1, 1, -1), glm::vec2(1, 1), glm::vec3(0, 0, 1),glm::vec3(0, 0, 1)),
-		Vertex(glm::vec3(1, -1,-1), glm::vec2(1, 0), glm::vec3(0, 0, 1),glm::vec3(0, 0, 1)),
+		Vertex(glm::vec3(-1, -1, -1), glm::vec2(0, 0), glm::vec3(0, 0, 1),glm::vec3(0, 1, 1)),
+		Vertex(glm::vec3(-1, 1, -1), glm::vec2(0, 1), glm::vec3(0, 0, 1),glm::vec3(0, 1, 1)),
+		Vertex(glm::vec3(1, 1, -1), glm::vec2(1, 1), glm::vec3(0, 0, 1),glm::vec3(0, 1, 1)),
+		Vertex(glm::vec3(1, -1,-1), glm::vec2(1, 0), glm::vec3(0, 0, 1),glm::vec3(0, 1, 1)),
 	};
 	unsigned int indices[] =	{0, 1, 2,
 				0, 2, 3};
@@ -43,7 +43,6 @@ IndexedModel PlaneTriangles()
 		model.positions.push_back(*vertices[i].GetPos());
 		model.colors.push_back(*vertices[i].GetColor());
 		model.normals.push_back(*vertices[i].GetNormal());
-		model.weights.push_back(*vertices[i].GetWeight());
 		model.texCoords.push_back(*vertices[i].GetTexCoord());
 	
 	}
@@ -116,7 +115,6 @@ IndexedModel CubeTriangles()
 		model.positions.push_back(*vertices[i].GetPos());
 		model.colors.push_back(*vertices[i].GetColor());
 		model.normals.push_back(*vertices[i].GetNormal());
-		model.weights.push_back(*vertices[i].GetWeight());
 		model.texCoords.push_back(*vertices[i].GetTexCoord());
 	
 	}
@@ -199,7 +197,6 @@ IndexedModel TethrahedronGenerator()
 		model.positions.push_back(*vertices[i].GetPos());
 		model.colors.push_back(*vertices[i].GetColor());
 		model.normals.push_back(*vertices[i].GetNormal());
-	    model.weights.push_back(*vertices[i].GetWeight());
 		model.texCoords.push_back(*vertices[i].GetTexCoord());
 		//model.weights.push_back(glm::vec3(0,1,0));
 	}
@@ -267,7 +264,6 @@ IndexedModel OctahedronGenerator()
 		model.positions.push_back(*vertices[i].GetPos());
 		model.colors.push_back(*vertices[i].GetColor());
 		model.normals.push_back(*vertices[i].GetNormal());
-		model.weights.push_back(*vertices[i].GetWeight());
 		model.texCoords.push_back(*vertices[i].GetTexCoord());
 //		model.weights.push_back(glm::vec3(0,1,0));
 	}

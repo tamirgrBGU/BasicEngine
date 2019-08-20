@@ -1,10 +1,17 @@
 #include "camera.h"
 #include <glm/gtc/matrix_transform.hpp>
+
 	
-Camera::Camera(glm::vec3& pos,const glm::vec3& forward, float fov, float zNear, float zFar)
+	Camera::Camera(float fov, float zNear, float zFar)
 	{
-		this->projection =  glm::perspective(fov,1.0f , zNear, zFar);
-		this->projection = this->projection;
+		if(fov > 0) //prerspective
+		{
+			this->projection =  glm::perspective(fov,1.0f , zNear, zFar);
+		}
+		else  //ortho
+		{
+			this->projection = glm::ortho(-1.0f,1.0f,-1.0f,1.0f,zNear,zFar);
+		}
 		this->fov = fov;
 		this->near = zNear;
 		this->far = zFar;

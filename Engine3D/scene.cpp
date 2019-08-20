@@ -23,7 +23,7 @@
 		//indicesSize = sizeof(indices)/sizeof(indices[0]) ; 
 		glLineWidth(5);
 	
-		cameras.push_back(new Camera(glm::vec3(0,0,1.0f),glm::vec3(0,0,-1.0f),60.0f,0.1f,100.0f));		
+		cameras.push_back(new Camera(60.0f,0.1f,100.0f));		
 		pickedShape = -1;
 		depth = 0;
 		cameraIndx = 0;
@@ -32,13 +32,13 @@
 		isActive = false;
 	}
 
-	Scene::Scene(glm::vec3 position,float angle,float near, float far)
+	Scene::Scene(float angle,float near, float far)
 	{
 		//verticesSize = sizeof(vertices)/sizeof(vertices[0]);
 		//
 		//indicesSize = sizeof(indices)/sizeof(indices[0]) ; 
 		glLineWidth(5);
-		cameras.push_back(new Camera(position,-position,angle,near,far));
+		cameras.push_back(new Camera(angle,near,far));
 		pickedShape = -1;
 		depth = 0;
 		cameraIndx = 0;
@@ -82,7 +82,8 @@
 
 	void Scene::AddCamera(glm::vec3& pos , float fov, float zNear, float zFar)
 	{
-		cameras.push_back(new Camera(pos,-pos,fov,zNear,zFar));
+		cameras.push_back(new Camera(fov,zNear,zFar));
+		cameras.back()->MyTranslate(pos,0);
 	}
 
 	void Scene::Draw(int shaderIndx,int cameraIndx,int buffer,bool toClear,bool debugMode)

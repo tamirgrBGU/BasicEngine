@@ -70,7 +70,7 @@ void MeshConstructor::InitLine(IndexedModel &model){
 		vao.AddBuffer(*vbs.back(),i,3,GL_FLOAT);
 	}
 	
-	ib = new IndexBuffer((unsigned int*)model.GetData(5),indicesNum);
+	ib = new IndexBuffer((unsigned int*)model.GetData(VEC2_ATTRIB_NUM + VEC3_ATTRIB_NUM),indicesNum);
 	
 	vao.Unbind();
 	is2D = false;
@@ -95,7 +95,7 @@ void MeshConstructor::InitMesh( IndexedModel &model){
 		vao.AddBuffer(*vbs.back(),i,2,GL_FLOAT);
 	}
 
-	ib = new IndexBuffer((unsigned int*)model.GetData(5),indicesNum);
+	ib = new IndexBuffer((unsigned int*)model.GetData(i),indicesNum);
 	
 	vao.Unbind();
 	//is2D = true;
