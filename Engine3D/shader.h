@@ -25,7 +25,7 @@ public:
 	 ~Shader();
 protected:
 private:
-	enum AttributesLayout
+	enum Attributes
 	{
 		POSITION_VB,
 		COLOR_VB,
@@ -38,7 +38,6 @@ private:
 	Shader(const Shader& shader) {}
 	
 	std::string LoadShader(const std::string& fileName);
-	//void CheckShaderError(unsigned int shader, unsigned int flag, bool isProgram, const std::string& errorMessage);
 	unsigned int CreateShader(const std::string& text, unsigned int type);
 
 	unsigned int m_program;

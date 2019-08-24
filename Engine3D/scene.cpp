@@ -3,8 +3,6 @@
 #include "scene.h"
 #include <iostream>
 
-
-
 	static void printMat(const glm::mat4 mat)
 	{
 		printf(" matrix: \n");
@@ -18,12 +16,9 @@
 
 	Scene::Scene()
 	{
-		//verticesSize = sizeof(vertices)/sizeof(vertices[0]);
-		//
-		//indicesSize = sizeof(indices)/sizeof(indices[0]) ; 
 		glLineWidth(5);
 	
-		cameras.push_back(new Camera(60.0f,0.1f,100.0f));		
+		cameras.push_back(new Camera(60.0f,1.0,0.1f,100.0f));		
 		pickedShape = -1;
 		depth = 0;
 		cameraIndx = 0;
@@ -32,13 +27,10 @@
 		isActive = false;
 	}
 
-	Scene::Scene(float angle,float near, float far)
+	Scene::Scene(float angle,float relationWH,float near, float far)
 	{
-		//verticesSize = sizeof(vertices)/sizeof(vertices[0]);
-		//
-		//indicesSize = sizeof(indices)/sizeof(indices[0]) ; 
 		glLineWidth(5);
-		cameras.push_back(new Camera(angle,near,far));
+		cameras.push_back(new Camera(angle,relationWH,near,far));
 		pickedShape = -1;
 		depth = 0;
 		cameraIndx = 0;
@@ -75,14 +67,14 @@
 		textures.push_back(new Texture(textureFileName));
 	}
 
-	void Scene::AddTexture(int width,int height,int mode)
+	void Scene::AddTexture(int width,int height, unsigned char *data)
 	{
-		textures.push_back(new Texture(width,height,mode));
+		textures.push_back(new Texture(width,height,data));
 	}
 
-	void Scene::AddCamera(glm::vec3& pos , float fov, float zNear, float zFar)
+	void Scene::AddCamera(glm::vec3& pos , float fov,float relationWH , float zNear, float zFar)
 	{
-		cameras.push_back(new Camera(fov,zNear,zFar));
+		cameras.push_back(new Camera(fov,relationWH,zNear,zFar));
 		cameras.back()->MyTranslate(pos,0);
 	}
 
@@ -151,7 +143,6 @@
 
 	void Scene::ShapeTransformation(int type,float amt)
 	{
-		//vec3 newAxis;
 		if(glm::abs(amt)>1e-5)
 		{
 			switch (type)
@@ -183,10 +174,10 @@
 
 	void Scene::Resize(int width,int height)
 	{
-		//glViewport(cameras[0]->GetLeft(),cameras[0]->GetBottom(),width,height);
-		
-		//cameras[0]->setProjection(cameras[cameraIndx]->GetNear(),cameras[cameraIndx]->GetFar(),Viewport(cameras[0]->GetLeft(),cameras[0]->GetBottom(),width,height));
-		
+	
+		cameras[0]->SetProjection(cameras[0]->GetAngle(),(float)width/height);
+		glViewport(0,0,width,height);
+		std::cout<<cameras[0]->GetRelationWH()<<std::endl;
 	}
 
 	float Scene::Picking(int x,int y)

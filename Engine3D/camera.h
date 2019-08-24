@@ -6,7 +6,7 @@
 class Camera : public MovableGLM
 {
 public:
-	Camera( float fov, float zNear, float zFar);
+	Camera( float fov,float relathionWH, float zNear, float zFar);
 
 	inline glm::mat4 GetViewProjection() const	{
 		return projection;}	
@@ -19,12 +19,15 @@ public:
 
 	inline float GetFar(){
 		return far;}
+
+	inline float GetRelationWH(){
+		return relationWH;}
 	
-	void SetProjection(float zNear, float zFar);
+	void SetProjection(float fov, float relationWH);
 protected:
 private:
 	glm::mat4 projection;
-	float fov;
+	float fov, relationWH;
 	float far,near;
 };
 

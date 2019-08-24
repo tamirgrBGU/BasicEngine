@@ -6,20 +6,10 @@
 class Texture
 {
 public:
-	enum
-	{
-		COLOR,
-		DEPTH,
-		STENCIL,
-		ACCUM,
-	};
 	Texture(const std::string& fileName);
-	Texture(int width, int height,int mode);
+	Texture(int width, int height,unsigned char *data);
 	void Bind(int slot);
-	void bindTex2Buffer( int num, int mode);
 	inline int GetSlot(){return m_texture;}
-	inline bool IsReadFromBuffer() {return isReadFromBuffer;}
-	void Resize(int width,int height);
 	 ~Texture();
 protected:
 private:

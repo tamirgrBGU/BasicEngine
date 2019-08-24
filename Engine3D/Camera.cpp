@@ -2,26 +2,29 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 	
-	Camera::Camera(float fov, float zNear, float zFar)
+	Camera::Camera(float fov,float relationWH, float zNear, float zFar)
 	{
 		if(fov > 0) //prerspective
 		{
-			this->projection =  glm::perspective(fov,1.0f , zNear, zFar);
+			this->projection =  glm::perspective(fov,relationWH , zNear, zFar);
 		}
 		else  //ortho
 		{
 			this->projection = glm::ortho(-1.0f,1.0f,-1.0f,1.0f,zNear,zFar);
 		}
-		this->fov = fov;
 		this->near = zNear;
 		this->far = zFar;
+		this->fov = fov;
+		this->relationWH = relationWH;
 }
 
-	void Camera::SetProjection(float zNear, float zFar)
+	void Camera::SetProjection(float fov, float relationWH)
 	{
-	
-		this->projection = glm::perspective(fov,1.0f , zNear, zFar);
-		this->near = zNear;
-		this->far = zFar;		
+		if( this->fov>0)
+		{
+			this->projection = glm::perspective(fov,relationWH , near, far);	
+			this->fov = fov;
+		}
+		this->relationWH = relationWH;
 	}
 

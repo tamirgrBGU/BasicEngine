@@ -29,7 +29,6 @@ Shader::Shader(const std::string& fileName)
 	glBindAttribLocation(m_program, TEXCOORD_VB, "texCoords");
 	glBindAttribLocation(m_program, NORMAL_VB, "normal");
 	glBindAttribLocation(m_program, COLOR_VB, "color");
-	//GLCall(glBindAttribLocation(m_program, JOINT_INDEX_VB, "jointIndices"));
 
 	glLinkProgram(m_program);
 	

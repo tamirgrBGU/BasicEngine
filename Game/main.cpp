@@ -6,7 +6,7 @@ int main(int argc,char *argv[])
 	const int DISPLAY_WIDTH = 1600;
 	const int DISPLAY_HEIGHT = 800;
 
-	Game *scn = new Game(0.0f,0,100);
+	Game *scn = new Game(60.0f,(float)DISPLAY_WIDTH/DISPLAY_HEIGHT,1,100);
 	
 	Display display(DISPLAY_WIDTH, DISPLAY_HEIGHT, "OpenGL");
 	

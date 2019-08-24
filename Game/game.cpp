@@ -17,14 +17,8 @@ Game::Game() : Scene()
 {
 }
 
-Game::Game(float angle,float near, float far) : Scene(angle,near,far)
+Game::Game(float angle ,float relationWH, float near, float far) : Scene(angle,relationWH,near,far)
 { 	
-}
-
-void Game::addShape(int type,int parent,unsigned int mode)
-{
-		chainParents.push_back(parent);		
-		shapes.push_back(new Shape(type,mode));	
 }
 
 void Game::Init()

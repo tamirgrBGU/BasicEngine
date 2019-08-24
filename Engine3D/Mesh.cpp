@@ -29,10 +29,10 @@ IndexedModel PlaneTriangles()
 {
 	Vertex vertices[] =
 	{
-		Vertex(glm::vec3(-1, -1, -1), glm::vec2(0, 0), glm::vec3(0, 0, 1),glm::vec3(0, 1, 1)),
-		Vertex(glm::vec3(-1, 1, -1), glm::vec2(0, 1), glm::vec3(0, 0, 1),glm::vec3(0, 1, 1)),
-		Vertex(glm::vec3(1, 1, -1), glm::vec2(1, 1), glm::vec3(0, 0, 1),glm::vec3(0, 1, 1)),
-		Vertex(glm::vec3(1, -1,-1), glm::vec2(1, 0), glm::vec3(0, 0, 1),glm::vec3(0, 1, 1)),
+		Vertex(glm::vec3(-1, -1, 0), glm::vec2(0, 0), glm::vec3(0, 0, 1),glm::vec3(0, 1, 1)),
+		Vertex(glm::vec3(-1, 1, 0), glm::vec2(0, 1), glm::vec3(0, 0, 1),glm::vec3(0, 1, 1)),
+		Vertex(glm::vec3(1, 1, 0), glm::vec2(1, 1), glm::vec3(0, 0, 1),glm::vec3(0, 1, 1)),
+		Vertex(glm::vec3(1, -1,0), glm::vec2(1, 0), glm::vec3(0, 0, 1),glm::vec3(0, 1, 1)),
 	};
 	unsigned int indices[] =	{0, 1, 2,
 				0, 2, 3};
@@ -116,7 +116,6 @@ IndexedModel CubeTriangles()
 		model.colors.push_back(*vertices[i].GetColor());
 		model.normals.push_back(*vertices[i].GetNormal());
 		model.texCoords.push_back(*vertices[i].GetTexCoord());
-	
 	}
 	for(unsigned int i = 0; i < 36; i++)
         model.indices.push_back(indices[i]);
@@ -182,7 +181,6 @@ IndexedModel TethrahedronGenerator()
 	};
 
 
-
 	unsigned int indices[] =	{0, 1, 2,
 							     3, 4, 5,
 								 6,7,8,
@@ -198,7 +196,6 @@ IndexedModel TethrahedronGenerator()
 		model.colors.push_back(*vertices[i].GetColor());
 		model.normals.push_back(*vertices[i].GetNormal());
 		model.texCoords.push_back(*vertices[i].GetTexCoord());
-		//model.weights.push_back(glm::vec3(0,1,0));
 	}
 	for(unsigned int i = 0; i < 12; i++)
         model.indices.push_back(indices[i]);
@@ -265,7 +262,6 @@ IndexedModel OctahedronGenerator()
 		model.colors.push_back(*vertices[i].GetColor());
 		model.normals.push_back(*vertices[i].GetNormal());
 		model.texCoords.push_back(*vertices[i].GetTexCoord());
-//		model.weights.push_back(glm::vec3(0,1,0));
 	}
 	for(unsigned int i = 0; i < 24; i++)
         model.indices.push_back(indices[i]);
