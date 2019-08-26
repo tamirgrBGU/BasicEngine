@@ -5,8 +5,11 @@ int main(int argc,char *argv[])
 {
 	const int DISPLAY_WIDTH = 1600;
 	const int DISPLAY_HEIGHT = 800;
+	const float CAMERA_ANGLE = 0.0f;
+	const float NEAR = 1.0f;
+	const float FAR = 100.0f;
 
-	Game *scn = new Game(60.0f,(float)DISPLAY_WIDTH/DISPLAY_HEIGHT,1,100);
+	Game *scn = new Game(CAMERA_ANGLE,(float)DISPLAY_WIDTH/DISPLAY_HEIGHT,NEAR,FAR);
 	
 	Display display(DISPLAY_WIDTH, DISPLAY_HEIGHT, "OpenGL");
 	

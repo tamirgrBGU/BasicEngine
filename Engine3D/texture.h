@@ -15,7 +15,6 @@ protected:
 private:
 	Texture(const Texture& texture) {}
 	void operator=(const Texture& texture) {}
-	bool isReadFromBuffer;
 	unsigned int m_texture;
 };
 
