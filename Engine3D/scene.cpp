@@ -1,5 +1,4 @@
-#define GLEW_STATIC
-#include <GL\glew.h>
+#include "glad/include/glad/glad.h"
 #include "scene.h"
 #include <iostream>
 
@@ -16,6 +15,7 @@
 
 	Scene::Scene()
 	{
+		//
 		glLineWidth(5);
 	
 		cameras.push_back(new Camera(60.0f,1.0,0.1f,100.0f));		
@@ -27,10 +27,10 @@
 		isActive = false;
 	}
 
-	Scene::Scene(float angle,float relationWH,float near, float far)
+	Scene::Scene(float angle,float relationWH,float near1, float far1)
 	{
-		glLineWidth(5);
-		cameras.push_back(new Camera(angle,relationWH,near,far));
+		//glLineWidth(5);
+		cameras.push_back(new Camera(angle,relationWH,near1,far1));
 		pickedShape = -1;
 		depth = 0;
 		cameraIndx = 0;

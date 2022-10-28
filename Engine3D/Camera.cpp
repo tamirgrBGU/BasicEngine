@@ -12,8 +12,8 @@
 		{
 			this->projection = glm::ortho(-1.0f,1.0f,-1.0f,1.0f,zNear,zFar);
 		}
-		this->near = zNear;
-		this->far = zFar;
+		this->near1 = zNear;
+		this->far1 = zFar;
 		this->fov = fov;
 		this->relationWH = relationWH;
 }
@@ -22,7 +22,7 @@
 	{
 		if( this->fov>0)
 		{
-			this->projection = glm::perspective(fov,relationWH , near, far);	
+			this->projection = glm::perspective(fov,relationWH , near1, far1);	
 			this->fov = fov;
 		}
 		this->relationWH = relationWH;

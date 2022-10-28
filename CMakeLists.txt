@@ -11,12 +11,14 @@ file(GLOB DISPLAY DisplayGLFW/*.cpp DisplayGLFW/*.h)
 
 include_directories(${PROJECT_SOURCE_DIR}/res/includes ${PROJECT_SOURCE_DIR}/Engine3D
  ${PROJECT_SOURCE_DIR}/DisplayGLFW)
-#add_subdirectory(${PROJECT_SOURCE_DIR}/res)
+add_subdirectory(${PROJECT_SOURCE_DIR}/res/includes/glfw)
+add_subdirectory(${PROJECT_SOURCE_DIR}/res/includes/glad)
 
 add_library(Display ${DISPLAY})
 add_library(Engine ${ENGINE})
 
+
 add_executable(${PROJ_NAME} ${GAME})
 
-target_link_libraries(${PROJ_NAME} Engine Display ${PROJECT_SOURCE_DIR}/res/libs/glew32s.lib ${PROJECT_SOURCE_DIR}/res/libs/glfw3.lib opengl32.lib)
+target_link_libraries(${PROJ_NAME} Engine Display opengl32.lib glfw glad)
 

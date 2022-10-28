@@ -1,7 +1,7 @@
 #ifndef DISPLAY_INCLUDED_H
 #define DISPLAY_INCLUDED_H
 
-#include <GLFW\glfw3.h>
+#include "glfw/include/GLFW/glfw3.h"
 #include <string>
 
 class Display

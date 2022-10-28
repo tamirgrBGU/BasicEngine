@@ -4,8 +4,9 @@
  *  Created on: 13 de dez de 2017
  *      Author: Casa
  */
-#define GLEW_STATIC
-#include <GL\glew.h>
+//#define GLEW_STATIC
+//#include <GL\glew.h>
+#include "glad/include/glad/glad.h"
 #include "VertexBuffer.hpp"
 
 VertexBuffer::VertexBuffer(const void* data, unsigned int size) {

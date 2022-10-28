@@ -5,8 +5,9 @@
  *  Created on: 22 de dez de 2017
  *      Author: Casa
  */
-#define GLEW_STATIC
-#include <GL\glew.h>
+//#define GLEW_STATIC
+//#include <GL\glew.h>
+#include "glad/include/glad/glad.h"
 #include "VertexArray.hpp"
 
 VertexArray::VertexArray() {

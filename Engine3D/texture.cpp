@@ -1,6 +1,6 @@
-#define GLEW_STATIC
+//#define GLEW_STATIC
 #include "texture.h"
-#include <GL\glew.h>
+#include "glad/include/glad/glad.h"
 #include "stb_image.h"
 #include <iostream>
 

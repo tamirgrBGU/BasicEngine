@@ -15,10 +15,10 @@ public:
 		return fov;}
 
 	inline float GetNear(){
-		return near;}
+		return near1;}
 
 	inline float GetFar(){
-		return far;}
+		return far1;}
 
 	inline float GetRelationWH(){
 		return relationWH;}
@@ -28,7 +28,7 @@ protected:
 private:
 	glm::mat4 projection;
 	float fov, relationWH;
-	float far,near;
+	float far1,near1;
 };
 
 #endif

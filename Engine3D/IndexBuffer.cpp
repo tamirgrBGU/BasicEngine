@@ -4,8 +4,8 @@
  *  Created on: 13 de dez de 2017
  *      Author: Casa
  */
-#define GLEW_STATIC
-#include <GL\glew.h>
+//#define GLEW_STATIC
+#include "glad/include/glad/glad.h"
 #include "IndexBuffer.hpp"
 
 IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int count)

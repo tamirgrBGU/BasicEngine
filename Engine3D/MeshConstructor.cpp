@@ -1,5 +1,5 @@
-#define GLEW_STATIC
-#include <GL\glew.h>
+//#define GLEW_STATIC
+#include "glad/include/glad/glad.h"
 #include "MeshConstructor.h"
 #include "VertexBuffer.hpp"
 #include "IndexBuffer.hpp"

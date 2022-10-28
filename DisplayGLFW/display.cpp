@@ -1,5 +1,5 @@
-#define GLEW_STATIC
-#include <GL\glew.h>
+//#define GLEW_STATIC
+#include "glad/include/glad/glad.h"
 #include <iostream>
 #include "display.h"
 
@@ -17,13 +17,19 @@ Display::Display(int width, int height, const std::string& title)
 	}
 	glfwMakeContextCurrent(m_window);
 
-	GLenum res = glewInit();
+	// Load OpenGL and its extensions
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		printf("Failed to load OpenGL and its extensions\n");
+		exit(EXIT_FAILURE);
+	}
+	/*GLenum res = glewInit();
     if(res != GLEW_OK)
    {
 		std::cerr << "Glew failed to initialize!" << std::endl;
     }
-	isFullScreen = false;
-
+	isFullScreen = false;*/
+	glLineWidth(5);
 
 }
 

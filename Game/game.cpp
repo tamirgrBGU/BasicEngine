@@ -17,7 +17,7 @@ Game::Game() : Scene()
 {
 }
 
-Game::Game(float angle ,float relationWH, float near, float far) : Scene(angle,relationWH,near,far)
+Game::Game(float angle ,float relationWH, float near1, float far1) : Scene(angle,relationWH,near1,far1)
 { 	
 }
 

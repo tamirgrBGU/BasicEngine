@@ -1,4 +1,6 @@
-#include "InputManager.h"
+//#include "InputManager.h"
+#include "display.h"
+#include "game.h"
 #include "glm\glm.hpp"
 
 int main(int argc,char *argv[])
@@ -13,7 +15,7 @@ int main(int argc,char *argv[])
 	
 	Display display(DISPLAY_WIDTH, DISPLAY_HEIGHT, "OpenGL");
 	
-	Init(display);
+	//Init(display);
 	
 	scn->Init();
 
