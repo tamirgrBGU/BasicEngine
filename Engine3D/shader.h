@@ -3,8 +3,7 @@
 
 #include <string>
 #include <unordered_map>
-#include "glm\glm.hpp"
-
+#include "../includes/glm/glm.hpp"
 class Shader
 {
 public:

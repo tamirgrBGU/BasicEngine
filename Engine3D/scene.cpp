@@ -1,4 +1,4 @@
-#include "glad/include/glad/glad.h"
+#include "../includes/glad/include/glad/glad.h"
 #include "scene.h"
 #include <iostream>
 

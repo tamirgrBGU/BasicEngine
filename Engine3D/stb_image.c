@@ -299,7 +299,7 @@ unsigned char *stbi_load(char const *filename, int *x, int *y, int *comp, int re
 {
    FILE *f;
    unsigned char *result;
-   fopen_s(&f,filename, "rb");
+   f = fopen(filename,"rb");
    if (!f) return epuc("can't fopen", "Unable to open file");
    result = stbi_load_from_file(f,x,y,comp,req_comp);
    fclose(f);
@@ -362,7 +362,7 @@ float *stbi_loadf(char const *filename, int *x, int *y, int *comp, int req_comp)
 {
    FILE *f ;
    float *result;
-   fopen_s(&f,filename, "rb");
+   f = fopen(filename,"rb");
    if (!f) return epf("can't fopen", "Unable to open file");
    result = stbi_loadf_from_file(f,x,y,comp,req_comp);
    fclose(f);
@@ -401,7 +401,7 @@ extern int      stbi_is_hdr          (char const *filename)
 {
    FILE *f;
    int result=0;
-   fopen_s(&f,filename, "rb");
+   f = fopen(filename,"rb");
    if (f) {
       result = stbi_is_hdr_from_file(f);
       fclose(f);
@@ -4295,7 +4295,7 @@ int stbi_info(char const *filename, int *x, int *y, int *comp)
 {
     FILE *f ;
     int result;
-	fopen_s(&f,filename, "rb");
+	f = fopen(filename,"rb");
     if (!f) return e("can't fopen", "Unable to open file");
     result = stbi_info_from_file(f, x, y, comp);
     fclose(f);

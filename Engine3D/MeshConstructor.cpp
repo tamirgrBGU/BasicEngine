@@ -57,7 +57,7 @@ MeshConstructor::~MeshConstructor(void)
 	}
 }
 
-void MeshConstructor::InitLine(IndexedModel &model){
+void MeshConstructor::InitLine(const IndexedModel &model){
 	
 	int verticesNum = model.positions.size();
 	indicesNum = model.indices.size();
@@ -77,7 +77,7 @@ void MeshConstructor::InitLine(IndexedModel &model){
 	
 }
 
-void MeshConstructor::InitMesh( IndexedModel &model){
+void MeshConstructor::InitMesh(const IndexedModel &model){
 
 	int verticesNum = model.positions.size();
 	indicesNum = model.indices.size();

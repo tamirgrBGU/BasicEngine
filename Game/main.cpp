@@ -1,7 +1,7 @@
 //#include "InputManager.h"
-#include "display.h"
+#include "../DisplayGLFW/display.h"
 #include "game.h"
-#include "glm\glm.hpp"
+#include "../res/includes/glm/glm.hpp"
 
 int main(int argc,char *argv[])
 {
@@ -26,7 +26,8 @@ int main(int argc,char *argv[])
 		scn->Draw(1,0,scn->BACK,true,false);
 		scn->Motion();
 		display.SwapBuffers();
-		display.PollEvents();		
+		display.PollEvents();	
+			
 	}
 	delete scn;
 	return 0;

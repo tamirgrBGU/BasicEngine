@@ -1,7 +1,7 @@
 #include "MovableGLM.h"
 #include <stdio.h>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/quaternion.hpp>
+#include "../res/includes/glm/gtc/matrix_transform.hpp"
+#include "../res/includes/glm/gtc/quaternion.hpp"
 
 
 static void printMat(const glm::mat4 mat)
@@ -20,7 +20,7 @@ MovableGLM::MovableGLM()
 	ZeroTrans();
 }
 
-glm::mat4 MovableGLM::MakeTrans(glm::mat4 &prevTransformations) const
+glm::mat4 MovableGLM::MakeTrans(const glm::mat4 &prevTransformations) const
 {
 	return prevTransformations * MakeTrans();
 }
@@ -35,7 +35,7 @@ void MovableGLM::MyTranslate(glm::vec3 delta,int mode)
 	trans = glm::translate(trans,delta);
 }
 
-void  MovableGLM::MyRotate(float angle,glm::vec3 &vec,int mode)
+void  MovableGLM::MyRotate(float angle,const glm::vec3 &vec,int mode)
 {
 	rot = glm::rotate(rot,angle,vec);
 }
