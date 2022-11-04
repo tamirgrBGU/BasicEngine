@@ -1,15 +1,15 @@
-#version 330
-uniform mat4 MVP;
-uniform mat4 Normal;
+#version 330 core
 
 in vec3 position;
 in vec3 color;
 in vec3 normal;
 in vec2 texCoords;
 
-
 out vec3 color0;
 out vec3 normal0;
+
+uniform mat4 Normal;
+uniform mat4 MVP;
 
 void main()
 {

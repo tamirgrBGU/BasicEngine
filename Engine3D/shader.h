@@ -1,9 +1,10 @@
+#pragma once
 #ifndef SHADER_INCLUDED_H
 #define SHADER_INCLUDED_H
 
 #include <string>
 #include <unordered_map>
-#include "../includes/glm/glm.hpp"
+#include "../res/includes/glm/glm.hpp"
 class Shader
 {
 public:

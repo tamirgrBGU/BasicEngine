@@ -1,6 +1,6 @@
 //#define GLEW_STATIC
 #include "shader.h"
-#include "glad/include/glad/glad.h"
+#include "../res/includes/glad/include/glad/glad.h"
 #include <iostream>
 #include <fstream>
 
@@ -68,7 +68,9 @@ std::string Shader::LoadShader(const std::string& fileName)
         {
             getline(file, line);
 			output.append(line + "\n");
+			std::cout<<line<<std::endl;
         }
+		std::cout<<std::endl;
     }
     else
     {

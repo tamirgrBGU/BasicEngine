@@ -1,7 +1,7 @@
+#pragma once
 #ifndef DISPLAY_INCLUDED_H
 #define DISPLAY_INCLUDED_H
-
-#include "glfw/include/GLFW/glfw3.h"
+#include "../res/includes/glfw/include/GLFW/glfw3.h"
 #include <string>
 
 class Display

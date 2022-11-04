@@ -1,11 +1,11 @@
-//#include "InputManager.h"
-#include "../DisplayGLFW/display.h"
+#include "InputManager.h"
+// #include "../DisplayGLFW/display.h"
 #include "game.h"
 #include "../res/includes/glm/glm.hpp"
 
 int main(int argc,char *argv[])
 {
-	const int DISPLAY_WIDTH = 1600;
+	const int DISPLAY_WIDTH = 800;
 	const int DISPLAY_HEIGHT = 800;
 	const float CAMERA_ANGLE = 0.0f;
 	const float NEAR = 1.0f;
@@ -15,7 +15,7 @@ int main(int argc,char *argv[])
 	
 	Display display(DISPLAY_WIDTH, DISPLAY_HEIGHT, "OpenGL");
 	
-	//Init(display);
+	Init(display);
 	
 	scn->Init();
 

@@ -2,8 +2,8 @@
 // #define STBI_NO_STDIO
 #define STB_IMAGE_IMPLEMENTATION
 #include "texture.h"
+#include "stb_image.h"
 #include "../res/includes/glad/include/glad/glad.h"
-#include "../res/includes/stb/stb_image.h"
 #include <iostream>
 
 Texture::Texture(const std::string& fileName)
