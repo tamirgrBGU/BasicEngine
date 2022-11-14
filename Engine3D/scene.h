@@ -36,6 +36,7 @@ public:
 	virtual void WhenRotate(){};
 	virtual void Motion(){};
 	virtual void Draw(int shaderIndx,int cameraIndx,int buffer,bool toClear,bool debugMode);
+	virtual void Draw(int shaderIndx, int cameraIndx, int buffer, bool toClear, bool debugMode, int viewport);
 	virtual ~Scene(void);
 
 	void MoveCamera(int cameraIndx,int type,float amt);

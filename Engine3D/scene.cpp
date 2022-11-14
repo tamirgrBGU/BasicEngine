@@ -93,6 +93,7 @@
 				Clear(0,0,0,0);
 		}
 
+
 		for (unsigned int i=0; i<shapes.size();i++)
 		{
 			if(shapes[i]->Is2Render())
@@ -108,6 +109,57 @@
 				{ //picking
 					Update(MVP,Model,0);
 					shapes[i]->Draw(shaders,textures,true);
+				}
+			}
+		}
+		pickedShape = p;
+	}
+
+	// ASSIGNMENT 1 - Added version of draw with viewport index to allow drawing to different viewports
+	void Scene::Draw(int shaderIndx, int cameraIndx, int buffer, bool toClear, bool debugMode,int viewport)
+	{
+		glEnable(GL_DEPTH_TEST);
+		glm::mat4 Normal = MakeTrans();
+
+		glm::mat4 MVP = cameras[cameraIndx]->GetViewProjection() * glm::inverse(cameras[cameraIndx]->MakeTrans());
+		int p = pickedShape;
+		if (toClear)
+		{
+			if (shaderIndx > 0)
+				Clear(1, 0, 1, 1);
+			else
+				Clear(0, 0, 0, 0);
+		}
+
+		switch (viewport) {
+		case 0:
+			glViewport(0, 256, 256, 256);
+			break;
+		case 1:
+			glViewport(256, 256, 256, 256);
+			break;
+		case 2:
+			glViewport(0, 0, 256, 256);
+			break;
+		case 3:
+			glViewport(256, 0, 256, 256);
+			break;
+		}
+		for (unsigned int i = 0; i < shapes.size();i++)
+		{
+			if (shapes[i]->Is2Render())
+			{
+				glm::mat4 Model = Normal * shapes[i]->MakeTrans();
+
+				if (shaderIndx > 0)
+				{
+					Update(MVP, Model, shapes[i]->GetShader());
+					shapes[i]->Draw(shaders, textures, false);
+				}
+				else
+				{ //picking
+					Update(MVP, Model, 0);
+					shapes[i]->Draw(shaders, textures, true);
 				}
 			}
 		}

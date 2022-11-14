@@ -1,6 +1,7 @@
 #include "game.h"
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
+#include <stb_image.c>
 
 static void printMat(const glm::mat4 mat)
 {
@@ -26,8 +27,27 @@ void Game::Init()
 
 	AddShader("../res/shaders/pickingShader");	
 	AddShader("../res/shaders/basicShader");
+
+	std::string fileName = "../res/textures/lena256.jpg";
+	//std::string fileName = "../res/textures/box0.bmp";
+	int width = 256;
+	int height = 256;
+	int numComponents = 4;
 	
-	AddTexture("../res/textures/box0.bmp",false);
+    unsigned char* data = stbi_load((fileName).c_str(), &width, &height, &numComponents, 4);
+
+	unsigned char* grayscaled = Grayscale(width,height,data);
+	unsigned char* edges = EdgeDetection(width,height, grayscaled);
+	unsigned char* halftoned = Halftones(width,height,data);
+	unsigned char* fsalgo = FSAlgorithm(width,height,data);
+
+	AddTexture(width, height, grayscaled);
+	AddTexture(width, height, edges);
+	AddTexture(width, height, halftoned);
+	AddTexture(width, height, fsalgo);
+
+	free(grayscaled);
+	free(edges);
 
 	AddShape(Plane,-1,TRIANGLES);
 	
@@ -38,6 +58,52 @@ void Game::Init()
 	pickedShape = -1;
 	
 	//ReadPixel(); //uncomment when you are reading from the z-buffer
+}
+
+unsigned char* Game::Grayscale(int width, int height, unsigned char* data)
+{
+	std::vector<unsigned char> grayscaledVector;
+	for (int i = 0; i < width * height*4; i=i+4) {
+		unsigned char avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+		grayscaledVector.push_back(avg);
+		grayscaledVector.push_back(avg);
+		grayscaledVector.push_back(avg);
+		grayscaledVector.push_back(data[i+3]);
+	}
+	unsigned char* grayscaled;
+	grayscaled = (unsigned char*)malloc(grayscaledVector.size() * sizeof(unsigned char));
+	std::copy(grayscaledVector.begin(), grayscaledVector.end(), grayscaled);
+	return grayscaled;
+}
+
+unsigned char* Game::EdgeDetection(int width, int height, unsigned char* data)
+{
+	std::vector<unsigned char> gradientIntensitiesVector;
+	for (int row = 0; row < height; row++) {
+		for (int col = 0; col < width ; col++) {
+			int dx = data[row * width * 4 + col * 4] - data[row * width * 4 + (col + 1) * 4];
+			int dy = data[row * width * 4 + col * 4] - data[(row+1) * width * 4 + col * 4];
+			int gradient = sqrt(dx * dx + dy * dy);
+			gradientIntensitiesVector.push_back(gradient);
+			gradientIntensitiesVector.push_back(gradient);
+			gradientIntensitiesVector.push_back(gradient);
+			gradientIntensitiesVector.push_back(data[row * width * 4 + col * 4 + 3]);
+		}
+	}
+	unsigned char* gradientIntensities;
+	gradientIntensities = (unsigned char*)malloc(gradientIntensitiesVector.size() * sizeof(unsigned char));
+	std::copy(gradientIntensitiesVector.begin(), gradientIntensitiesVector.end(), gradientIntensities);
+	return gradientIntensities;
+}
+
+unsigned char* Game::Halftones(int width, int height, unsigned char* data)
+{
+	return data;
+}
+
+unsigned char* Game::FSAlgorithm(int width, int height, unsigned char* data)
+{
+	return data;
 }
 
 void Game::Update(const glm::mat4 &MVP,const glm::mat4 &Model,const int  shaderIndx)
@@ -75,3 +141,5 @@ void Game::Motion()
 Game::~Game(void)
 {
 }
+
+
