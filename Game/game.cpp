@@ -3,6 +3,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <stb_image.c>
 #include <numbers>
+#include <iostream>
+#include <fstream>
 # define PI           3.14159265358979323846  /* pi */
 static void printMat(const glm::mat4 mat)
 {
@@ -195,15 +197,20 @@ unsigned char* Game::EdgeDetection(int width, int height, unsigned char* data)
 			}
 		}
 	}
+
+	std::ofstream outputFile;
+	outputFile.open("../img4.txt");
 	std::vector<unsigned char> gradientIntensitiesVector;
 	for (int row = 0; row < height; row++) {
 		for (int col = 0; col < width; col++) {
+			outputFile << std::to_string(edgesMatrix[row][col] / 255) << ",";
 			gradientIntensitiesVector.push_back(edgesMatrix[row][col]);
 			gradientIntensitiesVector.push_back(edgesMatrix[row][col]);
 			gradientIntensitiesVector.push_back(edgesMatrix[row][col]);
 			gradientIntensitiesVector.push_back(data[row * width * 4 + col * 4 + 3]);
 		}
 	}
+	outputFile.close();
 	
 	unsigned char* gradientIntensities;
 	gradientIntensities = (unsigned char*)malloc(gradientIntensitiesVector.size() * sizeof(unsigned char));
@@ -282,16 +289,20 @@ unsigned char* Game::Halftones(int width, int height, unsigned char* data)
 			}
 		}
 	}
-	
+	std::ofstream outputFile;
+	outputFile.open("../img5.txt");
+
 	std::vector<unsigned char> halftonedVector;
 	for (int row = 0; row < height; row++) {
 		for (int col = 0; col < width; col++) {
+			outputFile << std::to_string((int)(halftonedMatrix[row][col] / 255)) << ",";
 			halftonedVector.push_back(halftonedMatrix[row][col]);
 			halftonedVector.push_back(halftonedMatrix[row][col]);
 			halftonedVector.push_back(halftonedMatrix[row][col]);
 			halftonedVector.push_back(data[row * width * 4 + col * 4 + 3]);
 		}
 	}
+	outputFile.close();
 
 	unsigned char* halftoned;
 	halftoned = (unsigned char*)malloc(halftonedVector.size() * sizeof(unsigned char));
@@ -334,15 +345,19 @@ unsigned char* Game::FSAlgorithm(int width, int height, unsigned char* data)
 		}
 	}
 
+	std::ofstream outputFile;
+	outputFile.open("../img6.txt");
 	std::vector<unsigned char> fsVector;
 	for (int row = 0; row < height; row++) {
 		for (int col = 0; col < width; col++) {
+			outputFile << std::to_string((int)trunc(((double)fsMatrix[row][col] / (double)MAX_INTENSITY) * (double)NUM_INTENSITIES + 0.5)) << ",";
 			fsVector.push_back(fsMatrix[row][col]);
 			fsVector.push_back(fsMatrix[row][col]);
 			fsVector.push_back(fsMatrix[row][col]);
 			fsVector.push_back(data[row * width * 4 + col * 4 + 3]);
 		}
 	}
+	outputFile.close();
 
 	unsigned char* fsalgo;
 	fsalgo = (unsigned char*)malloc(fsVector.size() * sizeof(unsigned char));
