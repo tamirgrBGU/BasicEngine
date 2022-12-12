@@ -5,6 +5,8 @@
 #include <numbers>
 #include <iostream>
 #include <fstream>
+#include "../build/RayScene.h"
+using namespace std;
 # define PI           3.14159265358979323846  /* pi */
 static void printMat(const glm::mat4 mat)
 {
@@ -25,6 +27,69 @@ Game::Game(float angle ,float relationWH, float near1, float far1) : Scene(angle
 { 	
 }
 
+RayScene Game::LoadSceneFile(const std::string& fileName) {
+	RayScene rayScene = RayScene();
+
+	ifstream sceneFile;
+
+	sceneFile.open(fileName);
+
+	string eyeLine;
+	float xEye, yEye, zEye, bonusEye;
+	getline(sceneFile, eyeLine);
+	sscanf(eyeLine.c_str(), "e %f %f %f %f", &xEye, &yEye, &zEye, &bonusEye);
+	rayScene.SetCamera(Point(xEye, yEye, zEye));
+
+	string ambientLine;
+	float rAmbient, gAmbient, bAmbient, aAmbient;
+	getline(sceneFile, ambientLine);
+	sscanf(ambientLine.c_str(), "a %f %f %f %f", &rAmbient, &gAmbient, &bAmbient, &aAmbient);
+	// TODO
+
+	string currentLine;
+	char identifier;
+	float arg1, arg2, arg3, arg4;
+	int currentShape = -1;
+	while (getline(sceneFile, currentLine)) {
+		sscanf(currentLine.c_str(), "%c %f %f %f %f", &identifier, &arg1, &arg2, &arg3, &arg4);
+		switch (identifier) {
+		case 'd':
+			// TODO
+			break;
+		case 'p':
+			//TODO
+			break;
+		case 'i':
+			//TODO
+			break;
+		case 'o':
+			if (arg4 > 0) {
+				// Sphere
+				rayScene.AddRayObject(new Sphere(Point(arg1, arg2, arg3), arg4));
+			}
+			else {
+				// Plane
+			}
+			break;
+		case 'r':
+			//TODO
+			break;
+		case 't':
+			//TODO
+			break;
+		case 'c':
+			//TODO
+			break;
+		default:
+			cout << "Invalid scene line!" << endl;
+		}
+	}
+
+	sceneFile.close();
+
+	return rayScene;
+}
+
 void Game::Init()
 {		
 
@@ -32,28 +97,14 @@ void Game::Init()
 	AddShader("../res/shaders/basicShader");
 
 	std::string fileName = "../res/textures/lena256.jpg";
-	//std::string fileName = "../res/textures/box0.bmp";
-	int width = 256;
-	int height = 256;
-	int numComponents = 4;
+	int width = 800;
+	int height = 800;
+
+	RayScene rayScene = LoadSceneFile("../scene.txt");
 	
-    unsigned char* data = stbi_load((fileName).c_str(), &width, &height, &numComponents, 4);
-
-	unsigned char* grayscaled = Grayscale(width,height,data);
-	unsigned char* edges = EdgeDetection(width,height, grayscaled);
-	unsigned char* halftoned = Halftones(width,height,grayscaled);
-	unsigned char* fsalgo = FSAlgorithm(width,height, grayscaled);
-
-	AddTexture(width, height, grayscaled);
-	AddTexture(width, height, edges);
-	AddTexture(width, height, halftoned);
-	AddTexture(width, height, fsalgo);
-
-	free(grayscaled);
-	free(edges);
-	free(halftoned);
-	free(fsalgo);
-
+	unsigned char* data = rayScene.Render(width,height);
+	AddTexture(width, height, data);
+	free(data);
 	AddShape(Plane,-1,TRIANGLES);
 	
 	pickedShape = 0;
