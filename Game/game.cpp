@@ -5,7 +5,8 @@
 #include <numbers>
 #include <iostream>
 #include <fstream>
-#include "../build/RayScene.h"
+#include "RayScene.h"
+#include "RayObject.h"
 using namespace std;
 # define PI           3.14159265358979323846  /* pi */
 static void printMat(const glm::mat4 mat)
@@ -44,23 +45,32 @@ RayScene Game::LoadSceneFile(const std::string& fileName) {
 	float rAmbient, gAmbient, bAmbient, aAmbient;
 	getline(sceneFile, ambientLine);
 	sscanf(ambientLine.c_str(), "a %f %f %f %f", &rAmbient, &gAmbient, &bAmbient, &aAmbient);
-	// TODO
+	rayScene.AddRayLightsource(new Ambient(rAmbient, gAmbient, bAmbient, aAmbient));
 
 	string currentLine;
 	char identifier;
 	float arg1, arg2, arg3, arg4;
-	int currentShape = -1;
+	int currentObjectToColour = 0;
+	int currentLightToSetI = 0;
 	while (getline(sceneFile, currentLine)) {
 		sscanf(currentLine.c_str(), "%c %f %f %f %f", &identifier, &arg1, &arg2, &arg3, &arg4);
 		switch (identifier) {
 		case 'd':
-			// TODO
+			if (arg4 == 0.0) {
+				// Directional
+				rayScene.AddRayLightsource(new Directional(Point(arg1, arg2, arg3)));
+			}
+			else {
+				// Spotlight
+				//TODO
+			}
 			break;
 		case 'p':
 			//TODO
 			break;
 		case 'i':
-			//TODO
+			rayScene.SetLightsourceIntensity(currentLightToSetI, arg1, arg2, arg3, arg4);
+			currentLightToSetI++;
 			break;
 		case 'o':
 			if (arg4 > 0) {
@@ -69,6 +79,7 @@ RayScene Game::LoadSceneFile(const std::string& fileName) {
 			}
 			else {
 				// Plane
+				rayScene.AddRayObject(new RayPlane(Point(arg1, arg2, arg3), arg4));
 			}
 			break;
 		case 'r':
@@ -78,7 +89,9 @@ RayScene Game::LoadSceneFile(const std::string& fileName) {
 			//TODO
 			break;
 		case 'c':
-			//TODO
+			rayScene.ColourRayObject(currentObjectToColour, Colour(arg1*255, arg2*255, arg3*255, 255));
+			rayScene.SetRayObjectShininess(currentObjectToColour, arg4);
+			currentObjectToColour++;
 			break;
 		default:
 			cout << "Invalid scene line!" << endl;
@@ -102,7 +115,7 @@ void Game::Init()
 
 	RayScene rayScene = LoadSceneFile("../scene.txt");
 	
-	unsigned char* data = rayScene.Render(width,height);
+	unsigned char* data = rayScene.Render(width,height, 1);
 	AddTexture(width, height, data);
 	free(data);
 	AddShape(Plane,-1,TRIANGLES);

@@ -2,6 +2,8 @@
 #include "Point.h"
 #include "RayCamera.h"
 #include "Ray.h"
+#include <vector>
+#include <vector>
 class RayScreen
 {
 public:
@@ -18,8 +20,8 @@ public:
 	}
 
 	void SetPixelDimensions(int widthPixels, int heightPixels);
-	Ray ConstructRayThroughPixel(RayCamera camera, int row, int col);
-	Point PixelsToPoint(int row, int col);
+	std::vector<Ray> ConstructRaysThroughPixel(RayCamera camera, int row, int col, int samples);
+	std::vector<Point> PixelsToPoints(int row, int col, int samples);
 private:
 	Point upperLeftPoint;
 	Point upperRightPoint;

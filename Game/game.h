@@ -1,6 +1,6 @@
 #pragma once
 #include "scene.h"
-#include "../build/RayScene.h"
+#include "RayScene.h"
 class Game : public Scene
 {
 public:

@@ -12,5 +12,7 @@ public:
 		blue(blue),
 		intensity(intensity)
 	{};
+	Colour Add(Colour colour);
+	Colour Multiply(double rScale, double gScale, double bScale, double iScale);
 };
 

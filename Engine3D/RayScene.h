@@ -16,12 +16,16 @@ public:
 		lightsources(vector<RayLightsource*>()) 
 	{};
 
-	unsigned char* Render(int widthPixels, int heightPixels);
+	unsigned char* Render(int widthPixels, int heightPixels, int samples);
 	void SetCamera(Point location);
 	void AddRayObject(RayObject* rayObject);
+	void ColourRayObject(int index, Colour colour);
+	void SetRayObjectShininess(int index, double shininess);
 	void AddRayLightsource(RayLightsource* rayLightsource);
+	void SetLightsourceIntensity(int index, double rScale, double gScale, double bScale, double iScale);
 	Colour CalcColour(Ray in_ray);
 	Intersection* FindIntersection(Ray in_ray);
+	
 
 private:
 	vector<RayObject*> rayObjects;
