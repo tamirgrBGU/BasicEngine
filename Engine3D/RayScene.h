@@ -23,8 +23,10 @@ public:
 	void SetRayObjectShininess(int index, double shininess);
 	void AddRayLightsource(RayLightsource* rayLightsource);
 	void SetLightsourceIntensity(int index, double rScale, double gScale, double bScale, double iScale);
+	void SetLightsourceOrigin(int index, Point origin);
 	Colour CalcColour(Ray in_ray);
 	Intersection* FindIntersection(Ray in_ray);
+	bool Occluded(Ray lightRay);
 	
 
 private:

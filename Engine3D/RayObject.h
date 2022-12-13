@@ -6,7 +6,7 @@
 class RayObject
 {
 public:
-	RayObject() :colour(Colour(0, 0, 0, 0)) {};
+	RayObject() :colour(Colour(0, 0, 0, 0)), shininess(0) {};
 	virtual Intersection* Intersect(Ray in_ray) =0;
 	virtual Colour ColourAtPoint(Point point) = 0;
 	void SetColour(Colour colour) {

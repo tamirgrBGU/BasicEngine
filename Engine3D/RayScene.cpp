@@ -64,6 +64,11 @@ void RayScene::SetLightsourceIntensity(int index, double rScale, double gScale, 
 	lightsources[index]->SetIntensity(rScale, gScale, bScale, iScale);
 }
 
+void RayScene::SetLightsourceOrigin(int index, Point origin)
+{
+	lightsources[index]->SetOrigin(origin);
+}
+
 Colour RayScene::CalcColour(Ray in_ray)
 {
 	Intersection* hit = FindIntersection(in_ray);
@@ -72,7 +77,10 @@ Colour RayScene::CalcColour(Ray in_ray)
 	}
 	Colour colour = Colour(0, 0, 0, 0);
 	for (auto lightsource : lightsources) {
-		colour = colour.Add(lightsource->LightIntersection(hit));
+		Ray* lightRay = lightsource->ConstructLightRay(hit->point);
+		if (lightRay == nullptr || !Occluded(*lightRay)) {
+			colour = colour.Add(lightsource->LightIntersection(hit));
+		}
 	}
 	return colour;
 
@@ -93,4 +101,9 @@ Intersection* RayScene::FindIntersection(Ray in_ray)
 		}
 	}
 	return closest_intersection;
+}
+
+bool RayScene::Occluded(Ray lightRay)
+{
+	return FindIntersection(lightRay)==nullptr;
 }
