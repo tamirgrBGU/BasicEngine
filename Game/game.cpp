@@ -7,6 +7,8 @@
 #include <fstream>
 #include "RayScene.h"
 #include "RayObject.h"
+#include <stack>
+#include <queue>
 using namespace std;
 # define PI           3.14159265358979323846  /* pi */
 static void printMat(const glm::mat4 mat)
@@ -40,6 +42,9 @@ RayScene Game::LoadSceneFile(const std::string& fileName) {
 	getline(sceneFile, eyeLine);
 	sscanf(eyeLine.c_str(), "e %f %f %f %f", &xEye, &yEye, &zEye, &bonusEye);
 	rayScene.SetCamera(Point(xEye, yEye, zEye));
+	if (bonusEye == 1) {
+		samples = 4;
+	}
 
 	string ambientLine;
 	float rAmbient, gAmbient, bAmbient, aAmbient;
@@ -51,7 +56,9 @@ RayScene Game::LoadSceneFile(const std::string& fileName) {
 	char identifier;
 	float arg1, arg2, arg3, arg4;
 	int currentObjectToColour = 0;
-	int currentLightToSetI = 0;
+	int currentLightToSetI = 1; // AMBIENT STARTED BEFORE
+	std::queue<int> spotlightIndexes = queue<int>();
+	int currentLightIndex = 1;
 	while (getline(sceneFile, currentLine)) {
 		sscanf(currentLine.c_str(), "%c %f %f %f %f", &identifier, &arg1, &arg2, &arg3, &arg4);
 		switch (identifier) {
@@ -62,11 +69,15 @@ RayScene Game::LoadSceneFile(const std::string& fileName) {
 			}
 			else {
 				// Spotlight
-				//TODO
+				rayScene.AddRayLightsource(new Spotlight(Point(arg1, arg2, arg3)));
+				spotlightIndexes.push(currentLightIndex);
 			}
+			currentLightIndex++;
 			break;
 		case 'p':
-			//TODO
+			rayScene.SetLightsourceOrigin(spotlightIndexes.front(), Point(arg1, arg2, arg3));
+			rayScene.SetLightsourceCutoffCosAlpha(spotlightIndexes.front(), arg4);
+			spotlightIndexes.pop();
 			break;
 		case 'i':
 			rayScene.SetLightsourceIntensity(currentLightToSetI, arg1, arg2, arg3, arg4);
@@ -83,10 +94,32 @@ RayScene Game::LoadSceneFile(const std::string& fileName) {
 			}
 			break;
 		case 'r':
-			//TODO
+			if (arg4 > 0) {
+				// Sphere
+				Sphere* sphere = new Sphere(Point(arg1, arg2, arg3), arg4);
+				sphere->MarkMirror();
+				rayScene.AddRayObject(sphere);
+			}
+			else {
+				// Plane
+				RayPlane* plane = new RayPlane(Point(arg1, arg2, arg3), arg4);
+				plane->MarkMirror();
+				rayScene.AddRayObject(plane);
+			}
 			break;
 		case 't':
-			//TODO
+			if (arg4 > 0) {
+				// Sphere
+				Sphere* sphere = new Sphere(Point(arg1, arg2, arg3), arg4);
+				sphere->MarkTransparent();
+				rayScene.AddRayObject(sphere);
+			}
+			else {
+				// Plane
+				RayPlane* plane = new RayPlane(Point(arg1, arg2, arg3), arg4);
+				plane->MarkTransparent();
+				rayScene.AddRayObject(plane);
+			}
 			break;
 		case 'c':
 			rayScene.ColourRayObject(currentObjectToColour, Colour(arg1*255, arg2*255, arg3*255, 255));
@@ -115,7 +148,7 @@ void Game::Init()
 
 	RayScene rayScene = LoadSceneFile("../scene.txt");
 	
-	unsigned char* data = rayScene.Render(width,height, 1);
+	unsigned char* data = rayScene.Render(width,height, samples, 5);
 	AddTexture(width, height, data);
 	free(data);
 	AddShape(Plane,-1,TRIANGLES);

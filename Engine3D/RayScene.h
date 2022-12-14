@@ -16,7 +16,7 @@ public:
 		lightsources(vector<RayLightsource*>()) 
 	{};
 
-	unsigned char* Render(int widthPixels, int heightPixels, int samples);
+	unsigned char* Render(int widthPixels, int heightPixels, int samples, int recursionLevels);
 	void SetCamera(Point location);
 	void AddRayObject(RayObject* rayObject);
 	void ColourRayObject(int index, Colour colour);
@@ -24,9 +24,10 @@ public:
 	void AddRayLightsource(RayLightsource* rayLightsource);
 	void SetLightsourceIntensity(int index, double rScale, double gScale, double bScale, double iScale);
 	void SetLightsourceOrigin(int index, Point origin);
-	Colour CalcColour(Ray in_ray);
+	void SetLightsourceCutoffCosAlpha(int index, double cosAlpha);
+	Colour CalcColour(Ray in_ray, int maxRecursionLevels, int currentRecursionLevel);
 	Intersection* FindIntersection(Ray in_ray);
-	bool Occluded(Ray lightRay);
+	bool Occluded(Ray lightRay, double maxDistance);
 	
 
 private:

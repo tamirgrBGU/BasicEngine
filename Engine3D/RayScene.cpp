@@ -3,7 +3,7 @@
 #include "Ray.h"
 
 
-unsigned char* RayScene::Render(int widthPixels, int heightPixels, int samples)
+unsigned char* RayScene::Render(int widthPixels, int heightPixels, int samples, int recursionLevels)
 {
 	Image image = Image(widthPixels, heightPixels);
 	screen.SetPixelDimensions(widthPixels, heightPixels);
@@ -11,8 +11,8 @@ unsigned char* RayScene::Render(int widthPixels, int heightPixels, int samples)
 		for (int col = 0; col < widthPixels; col++) {
 			std::vector<Ray> rays = screen.ConstructRaysThroughPixel(camera, row, col, samples);
 			std::vector<Colour> colours = std::vector<Colour>();
-			for (auto ray : rays) {
-				colours.push_back(CalcColour(ray));
+			for (auto& ray : rays) {
+				colours.push_back(CalcColour(ray, recursionLevels, 0));
 			}
 			int totalRed = 0;
 			int totalGreen = 0;
@@ -69,41 +69,85 @@ void RayScene::SetLightsourceOrigin(int index, Point origin)
 	lightsources[index]->SetOrigin(origin);
 }
 
-Colour RayScene::CalcColour(Ray in_ray)
+void RayScene::SetLightsourceCutoffCosAlpha(int index, double cosAlpha)
 {
+	lightsources[index]->SetCutoffCosAlpha(cosAlpha);
+}
+
+Colour RayScene::CalcColour(Ray in_ray, int maxRecursionLevels, int currentRecursionLevel)
+{
+	Colour colour = Colour(0, 0, 0, 0);
+	if (currentRecursionLevel == maxRecursionLevels) {
+		return colour;
+	}
 	Intersection* hit = FindIntersection(in_ray);
 	if (hit == nullptr) {
-		return Colour(205,205,0,255);
+		return colour;
 	}
-	Colour colour = Colour(0, 0, 0, 0);
-	for (auto lightsource : lightsources) {
-		Ray* lightRay = lightsource->ConstructLightRay(hit->point);
-		if (lightRay == nullptr || !Occluded(*lightRay)) {
-			colour = colour.Add(lightsource->LightIntersection(hit));
+	if (hit->object->kReflection != 1 && hit->object->kTransparency != 1) {
+		for (auto lightsource : lightsources) {
+			Ray* lightRay = lightsource->ConstructLightRay(hit->point);
+			if (lightRay == nullptr || !Occluded(*lightRay, lightsource->DistanceToPoint(hit->point))) {
+				colour = colour.Add(lightsource->LightIntersection(hit));
+			}
+			free(lightRay);
+			/*else {
+				if (hit->object->ColourAtPoint(Point(0,0,0)).red==255 && Occluded(*lightRay)) {
+					Intersection* test = FindIntersection(*lightRay);
+					continue;
+				}
+			}*/
 		}
 	}
-	return colour;
 
+		// Reflection recursion
+	if (hit->object->kReflection != 0) {
+		double kReflection = hit->object->kReflection;
+		Ray out_ray = in_ray.ReflectOff(hit);
+		colour = colour.Add(CalcColour(out_ray, maxRecursionLevels, currentRecursionLevel + 1)).
+			Multiply(kReflection,kReflection,kReflection,kReflection);
+	}
+
+	// Transparent recursion
+	if (hit->object->kTransparency != 0) {
+		double kTransparency = hit->object->kTransparency;
+		Ray out_ray = in_ray.RefractAt(hit);
+		colour = colour.Add(CalcColour(out_ray, maxRecursionLevels, currentRecursionLevel + 1)).
+			Multiply(kTransparency, kTransparency, kTransparency, kTransparency);
+	}
+
+	free(hit);
+	return colour;
 }
 
 Intersection* RayScene::FindIntersection(Ray in_ray)
 {
 	double min_t = INFINITY;
+	Intersection* intersection;
 	Intersection* closest_intersection = nullptr;
 	for (RayObject* object : rayObjects) {
-		Intersection* intersection = object->Intersect(in_ray);
+		intersection = object->Intersect(in_ray);
 		if (intersection != nullptr) {
 			double t = intersection->point.Distance(in_ray.origin);
 			if (t < min_t) {
+				if (closest_intersection != nullptr) {
+					free(closest_intersection);
+				}
 				closest_intersection = intersection;
 				min_t = t;
+			}
+			else {
+				free(intersection);
 			}
 		}
 	}
 	return closest_intersection;
 }
 
-bool RayScene::Occluded(Ray lightRay)
+bool RayScene::Occluded(Ray lightRay, double maxDistance)
 {
-	return FindIntersection(lightRay)==nullptr;
+	Intersection* hit = FindIntersection(Ray(lightRay.origin.Add(lightRay.direction.Scale(0.01)), lightRay.direction));
+	bool result = hit!=nullptr && hit->point.Distance(lightRay.origin) < maxDistance;
+	free(hit);
+	return result;
 }
