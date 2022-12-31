@@ -200,14 +200,16 @@
 			if(button == 1 )
 			{				
 
-				MyTranslate(glm::vec3(-xrel/20.0f,0,0),0);
+				/*MyTranslate(glm::vec3(-xrel/20.0f,0,0),0);
 				MyTranslate(glm::vec3(0,yrel/20.0f,0),0);
-				WhenTranslate();
+				WhenTranslate();*/
+				MoveCamera(0, yTranslate, yrel/20.0f);
+				MoveCamera(0, xTranslate, -xrel/20.0f);
 			}
 			else
 			{
-				MyRotate(xrel/2.0f,glm::vec3(1,0,0),0);
-				MyRotate(yrel/2.0f,glm::vec3(0,0,1),0);
+				MyRotate(xrel/2.0f,glm::vec3(0,1,0) * GetTransposedRot(),0);
+				MyRotate(yrel/2.0f,glm::vec3(1,0,0) * GetTransposedRot(),0);
 				WhenRotate();
 			}
 		}

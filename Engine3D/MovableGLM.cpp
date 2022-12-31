@@ -39,6 +39,10 @@ void  MovableGLM::MyRotate(float angle,const glm::vec3 &vec,int mode)
 {
 	rot = glm::rotate(rot,angle,vec);
 }
+
+void MovableGLM::RotateRelative(float angle, const glm::vec3& vec, MovableGLM other) {
+	trans = other.trans * glm::rotate(other.rot, angle, vec) * trans;
+}
 	
 void  MovableGLM::MyScale(glm::vec3 scale)
 {

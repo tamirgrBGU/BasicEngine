@@ -1,6 +1,7 @@
 #pragma once   //maybe should be static class
 #include "display.h"
 #include "game.h"
+#include "RubiksCube.h"
 
 
 	void mouse_callback(GLFWwindow* window,int button, int action, int mods)
@@ -23,22 +24,73 @@
 	
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		Game *scn = (Game*)glfwGetWindowUserPointer(window);
+		RubiksCube *scn = (RubiksCube*)glfwGetWindowUserPointer(window);
 
 		if(action == GLFW_PRESS || action == GLFW_REPEAT)
 		{
+			float angle = scn->GetRotationAngle();
 			switch (key)
 			{
+				case GLFW_KEY_R:
+					scn->RotateRightToLeftWall(scn->cube_size - 1, angle);
+					break;
+				case GLFW_KEY_L:
+					scn->RotateRightToLeftWall(0,angle);
+					break;
+				case GLFW_KEY_U:
+					scn->RotateBottomToTopWall(scn->cube_size - 1, angle);
+					break;
+				case GLFW_KEY_D:
+					scn->RotateBottomToTopWall(0, angle);
+					break;
+				case GLFW_KEY_B:
+					scn->RotateFrontToBackWall(0, angle);
+					break;
+				case GLFW_KEY_F:
+					scn->RotateFrontToBackWall(scn->cube_size - 1, angle);
+					break;
+				case GLFW_KEY_Z:
+					scn->DevideRotationAngle();
+					break;
+				case GLFW_KEY_A:
+					scn->MultiplyRotationAngle();
+					break;
+				case GLFW_KEY_0:
+				case GLFW_KEY_1:
+				case GLFW_KEY_2:
+				case GLFW_KEY_3:
+				case GLFW_KEY_4:
+				case GLFW_KEY_5:
+				case GLFW_KEY_6:
+				case GLFW_KEY_7:
+				case GLFW_KEY_8:
+				case GLFW_KEY_9:
+					scn->ChooseWallToRotate(key - GLFW_KEY_0);
+					break;
+				case GLFW_KEY_Q:
+					scn->RotateRightToLeftWall(scn->GetChosenWallToRotate(), angle);
+					break;
+				case GLFW_KEY_W:
+					scn->RotateBottomToTopWall(scn->GetChosenWallToRotate(), angle);
+					break;
+				case GLFW_KEY_E:
+					scn->RotateFrontToBackWall(scn->GetChosenWallToRotate(), angle);
+					break;
+				case GLFW_KEY_SPACE:
+					if(!scn->IsActive())
+						scn->Activate();	
+					else
+						scn->FlipRotation();
+					break;
 				case GLFW_KEY_ESCAPE:			
 					glfwSetWindowShouldClose(window,GLFW_TRUE);
 				break;
-				case GLFW_KEY_SPACE:
+				/*case GLFW_KEY_SPACE:
 					if(scn->IsActive())
 						scn->Deactivate();
 					else
 						scn->Activate();
-				break;
-
+				break;*/
 				case GLFW_KEY_UP:
 					scn->MoveCamera(0,scn->zTranslate,0.4f);
 					for (int i = 0; i < 27; i++)

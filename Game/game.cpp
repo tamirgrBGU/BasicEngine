@@ -29,45 +29,7 @@ void Game::Init()
 	
 	AddTexture("../res/textures/plane.png",false);
 
-
-	int cube_size = 3;
-	int indx = 0;
-	if (cube_size % 2 == 1)
-		for (int i = -cube_size / 2; i <= cube_size / 2; i++)
-			for (int j = -cube_size / 2; j <= cube_size / 2; j++)
-				for (int k = -cube_size / 2; k <= cube_size / 2; k++)
-				{
-					AddShape(Cube,-1,TRIANGLES);
-					SetShapeTex(indx,0);
-					shapes[indx]->MyScale(glm::vec3(0.5f));
-					//shapes[indx]->MyTranslate(glm::vec3(i,j,0), 0);
-					if (k == -1)
-					{
-						shapes[indx]->MyTranslate(glm::vec3(i,j,k), 0);
-					}
-					
-					indx++;
-				}
-	else
-		for (int i = -cube_size / 2; i < cube_size / 2; i++)
-			for (int j = -cube_size / 2; j < cube_size / 2; j++)
-				for (int k = -cube_size / 2; k < cube_size / 2; k++)
-				{
-					AddShape(Cube,-1,TRIANGLES);
-					SetShapeTex(indx,0);
-					shapes[indx]->MyScale(glm::vec3(0.5f));
-					shapes[indx]->MyTranslate(glm::vec3(i + 0.5,j + 0.5,k + 0.5), 0);
-					indx++;
-				}
-	
-	
-	
-
-	pickedShape = 0;
-	
-	MoveCamera(0,zTranslate,3*cube_size);
-	pickedShape = -1;
-
+	pickedShape = -1;	
 	
 	//ReadPixel(); //uncomment when you are reading from the z-buffer
 }
