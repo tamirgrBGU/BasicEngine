@@ -178,7 +178,6 @@ void RubiksCube::RotateRightToLeftWall(int wall_indx, float angle)
 		vector<vector<Shape*>> rotated_wall = RotateWall(wall, angle < 0, IsWallIn180DegreeAngle(RIGHT_TO_LEFT, wall_indx));
 		for (int j = 0; j < cube_size; j++)
 			for (int k = 0; k < cube_size; k++){
-				//cout << "wall_indx="<<wall_indx<<", j=" << j << ", k="<<k << " ===> wall_indx="<<wall_indx<<"T_"<<cube_size - j - 1<<"_"<<cube_size - k - 1<<endl;
 				cube[wall_indx][j][k] = rotated_wall[j][k];
 			}
 		NormalizeWallAngle(RIGHT_TO_LEFT, wall_indx);
@@ -198,13 +197,12 @@ vector<vector<Shape*>> RubiksCube::RotateWall(vector<vector<Shape*>> wall, bool 
 
 	for (int n = 0; n < num_rotations; n++)
 	{
-		vector<vector<Shape*>> rotated_wall;//;(cube_size, vector<Shape*>());
+		vector<vector<Shape*>> rotated_wall;
 		for (int i = cube_size - 1; i >= 0; i--)
 		{
 			vector<Shape*> rotated_row;
 			for (int j = 0; j < cube_size; j++)
 			{
-				//cout<<"T["<<rotated_wall.size()<<"]["<<transposed_row.size()<<"]=W["<<j<<"]["<<i<<"]"<<endl;
 				rotated_row.push_back(tmp[j][i]);
 			}
 			rotated_wall.push_back(rotated_row);
@@ -214,10 +212,6 @@ vector<vector<Shape*>> RubiksCube::RotateWall(vector<vector<Shape*>> wall, bool 
 	}
 	return tmp;
 }
-
-
-
-
 
 
 bool RubiksCube::UpdateWallAngle(Direction dir, int wall_indx, float angle)
