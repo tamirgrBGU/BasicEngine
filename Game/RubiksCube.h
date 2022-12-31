@@ -40,6 +40,7 @@ public:
 	void MultiplyRotationAngle();
 	void ChooseWallToRotate(int wall_indx) {chosen_wall_to_rotate = glm::min(wall_indx, cube_size - 1);}
 	int GetChosenWallToRotate() { return chosen_wall_to_rotate; }
+	void RandomizeCube();
 protected:
 	vector<vector<Shape *>> RotateWall(vector<vector<Shape *>> wall, bool clockwise, bool is_180_angle);
 
@@ -47,4 +48,7 @@ protected:
 	float walls_angles[3][cube_size];
 	float rotation_angle;
 	int chosen_wall_to_rotate;
+private:
+	int RandomaizeWallIndx();
+	int RandomaizeAction();
 };

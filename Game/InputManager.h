@@ -76,6 +76,9 @@
 				case GLFW_KEY_E:
 					scn->RotateFrontToBackWall(scn->GetChosenWallToRotate(), angle);
 					break;
+				case GLFW_KEY_M:
+					scn->RandomizeCube();
+					break;
 				case GLFW_KEY_SPACE:
 					if(!scn->IsActive())
 						scn->Activate();	
