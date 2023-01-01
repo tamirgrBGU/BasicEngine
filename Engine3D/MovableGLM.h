@@ -11,7 +11,7 @@ public:
 	void MyRotate(float angle, const glm::vec3 &vec, int mode);
 	void MyScale(glm::vec3 scale);
 	void ZeroTrans();
-	void RotateRelative(float angle, const glm::vec3& vec, MovableGLM other);
+	void RotateRelative(float angle, const glm::vec3& vec);
 	glm::mat3 GetTransposedRot();
 private:
 	glm::mat4 trans;

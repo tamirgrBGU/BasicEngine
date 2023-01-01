@@ -103,7 +103,7 @@ void RubiksCube::RotateFrontToBackWall(int wall_indx, float angle)
 		vector<Shape*> row;
 		for (int j = 0; j < cube_size; j++)
 		{
-			cube[i][j][wall_indx]->RotateRelative(angle, glm::vec3(0,0,1), *dynamic_cast<MovableGLM*>(this));
+			cube[i][j][wall_indx]->RotateRelative(angle, glm::vec3(0,0,1));
 			row.push_back(cube[i][j][wall_indx]);
 		}
 		wall.push_back(row);
@@ -136,7 +136,7 @@ void RubiksCube::RotateBottomToTopWall(int wall_indx, float angle)
 		vector<Shape*> row;
 		for (int k = 0; k < cube_size; k++)
 		{
-			cube[i][wall_indx][k]->RotateRelative(angle, glm::vec3(0,1,0), *dynamic_cast<MovableGLM*>(this));
+			cube[i][wall_indx][k]->RotateRelative(angle, glm::vec3(0,1,0));
 			row.push_back(cube[i][wall_indx][k]);
 		}
 		wall.push_back(row);
@@ -168,7 +168,7 @@ void RubiksCube::RotateRightToLeftWall(int wall_indx, float angle)
 		vector<Shape*> row;
 		for (int k = 0; k < cube_size; k++)
 		{
-			cube[wall_indx][j][k]->RotateRelative(angle, glm::vec3(-1,0,0), *dynamic_cast<MovableGLM*>(this));
+			cube[wall_indx][j][k]->RotateRelative(angle, glm::vec3(-1,0,0));
 			row.push_back(cube[wall_indx][j][k]);
 		}
 		wall.push_back(row);

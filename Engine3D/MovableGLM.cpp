@@ -49,11 +49,8 @@ glm::mat3 MovableGLM::GetTransposedRot() {
 	return transposed_rot;
 }
 
-void MovableGLM::RotateRelative(float angle, const glm::vec3& vec, MovableGLM other) {
-	//
+void MovableGLM::RotateRelative(float angle, const glm::vec3& vec) {
 	MyRotate(angle, vec * GetTransposedRot(), 0);
-	//
-	//trans = other.trans * glm::rotate(other.rot, angle, vec) * trans;
 }
 	
 void  MovableGLM::MyScale(glm::vec3 scale)
