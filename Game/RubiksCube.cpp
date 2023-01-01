@@ -266,35 +266,58 @@ int RubiksCube::RandomaizeAction(){
 	return rand() % 3;
 }
 
-
-void RubiksCube::RandomizeCube()
+void RubiksCube::RandomizeCubeStep()
 {
 	ofstream file;
-	file.open("../res/mixer_tracking.txt");
+	if (random_step_number == 1)
+	{
+		file.open("../res/mixer_tracking.txt");
+	}
+	else
+		file.open("../res/mixer_tracking.txt", ios::app);
 
 	float angle = -90.0f;
-	for (int i = 0; i < 100; i++)
+
+	int wall_indx = RandomaizeWallIndx();
+	int action = RandomaizeAction();
+	ChooseWallToRotate(wall_indx);
+	string direction;
+	switch (action)
 	{
-		int wall_indx = RandomaizeWallIndx();
-		int action = RandomaizeAction();
-		ChooseWallToRotate(wall_indx);
-		string direction;
-		switch (action)
-		{
-		case FRONT_TO_BACK:
-			RotateFrontToBackWall(wall_indx, angle);
-			direction="FRONT_TO_BACK";
-			break;
-		case RIGHT_TO_LEFT:
-			RotateRightToLeftWall(wall_indx, angle);
-			direction="RIGHT_TO_LEFT";
-			break;
-		case BOTTOM_TO_TOP:
-			RotateBottomToTopWall(wall_indx, angle);
-			direction="BOTTOM_TO_TOP";
-			break;
-		}
-		file << "Step "<< i <<" - Rotate wall "<< wall_indx << " in direction "<< direction << " " << glm::abs(angle) << " degrees clockwise." << endl;
+	case FRONT_TO_BACK:
+		RotateFrontToBackWall(wall_indx, angle);
+		direction="FRONT_TO_BACK";
+		break;
+	case RIGHT_TO_LEFT:
+		RotateRightToLeftWall(wall_indx, angle);
+		direction="RIGHT_TO_LEFT";
+		break;
+	case BOTTOM_TO_TOP:
+		RotateBottomToTopWall(wall_indx, angle);
+		direction="BOTTOM_TO_TOP";
+		break;
 	}
+	file << "Step "<< random_step_number <<" - Rotate wall "<< wall_indx << " in direction "<< direction << " " << glm::abs(angle) << " degrees clockwise." << endl;
+	cout << "Step "<< random_step_number <<" - Rotate wall "<< wall_indx << " in direction "<< direction << " " << glm::abs(angle) << " degrees clockwise." << endl;
+
 	file.close();
+}
+
+void RubiksCube::UpdateRandomStep() {
+	if(random_step_number == 100){
+		Unlock();
+		random_step_number = 1;
+	}
+	else
+		random_step_number++;
+}
+
+
+void RubiksCube::Draw(int shaderIndx,int cameraIndx,int buffer,bool toClear,bool debugMode){
+	if (IsLocked())
+	{
+		RandomizeCubeStep();
+		UpdateRandomStep();
+	}
+	Scene::Draw(shaderIndx,cameraIndx,buffer,toClear,debugMode);
 }

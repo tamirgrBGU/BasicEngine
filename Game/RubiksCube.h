@@ -23,6 +23,9 @@ public:
 	void Init();
 	static const int cube_size = 3;
 
+
+	virtual void Draw(int shaderIndx,int cameraIndx,int buffer,bool toClear,bool debugMode);
+
 	void InitializeCube();
 	void RotateFrontToBackWall(int wall_indx, float angle);
 	void RotateRightToLeftWall(int wall_indx, float angle);
@@ -40,7 +43,13 @@ public:
 	void MultiplyRotationAngle();
 	void ChooseWallToRotate(int wall_indx) {chosen_wall_to_rotate = glm::min(wall_indx, cube_size - 1);}
 	int GetChosenWallToRotate() { return chosen_wall_to_rotate; }
-	void RandomizeCube();
+	void RandomizeCubeStep();
+	bool IsLocked() {return lock;}
+	void UpdateRandomStep();
+	void Lock() {lock = true;}
+	void Unlock() {lock=false;}
+
+
 protected:
 	vector<vector<Shape *>> RotateWall(vector<vector<Shape *>> wall, bool clockwise, bool is_180_angle);
 
@@ -48,6 +57,9 @@ protected:
 	float walls_angles[3][cube_size];
 	float rotation_angle;
 	int chosen_wall_to_rotate;
+
+	bool lock = false;
+	int random_step_number = 1;
 private:
 	int RandomaizeWallIndx();
 	int RandomaizeAction();
